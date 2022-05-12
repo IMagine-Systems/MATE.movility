@@ -122,13 +122,21 @@ const BottomSheet = (props) => {
     const loacte = ['경운대학교', '인동', '옥계']; // 지역 선택 목록들
     let button = 0;
 
+    const DismissKeyboard = ({ children }) => (
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+          {children}
+        </TouchableWithoutFeedback>
+      );
+
     return (
+    
         <Modal
             visible={modalVisible}
             animationType={"fade"}
             transparent
             statusBarTranslucent
         >
+
             <View style={styles.overlay}>
                 <TouchableWithoutFeedback
                     onPress={closeModal}
@@ -144,7 +152,7 @@ const BottomSheet = (props) => {
                         <View>
                             <View style={{marginTop: 10, marginRight: 60, flexDirection : 'row', justifyContent:'space-between', alignItems: 'center', height: '40%'}}>
                             <FontAwesome style={{backgroundColor: 'white',marginLeft: 20,}} name="circle" size={15} color="#587DFF" />
-                            <Text>출발지</Text>
+                            <Text style={styles.start_text}>출발지</Text>
                             <TouchableOpacity onPress={() => { button = 1; setStartLocalSelect();}} style={{backgroundColor: 'rgba(196, 196, 196, 0.31)', width: 81, height: 27, borderRadius: 30, justifyContent: 'center', alignItems: 'center'}}>
                                 <Text style={{color: 'black'}}>인동</Text>
                             </TouchableOpacity>
@@ -162,7 +170,7 @@ const BottomSheet = (props) => {
                         </View>
                             <View style={{ marginRight: 60, flexDirection : 'row', justifyContent:'space-between', alignItems: 'center', height: '20%' }}>
                             <FontAwesome style={{backgroundColor: 'white',marginLeft: 20,}} name="circle" size={15} color="#587DFF" />
-                            <Text>도착지</Text>
+                            <Text style={styles.start_text}>도착지</Text>
                             <TouchableOpacity onPress={() => { button = 1; setEndLocalSelect();}} style={{backgroundColor: 'rgba(196, 196, 196, 0.31)', width: 81, height: 27, borderRadius: 30, justifyContent: 'center', alignItems: 'center'}}>
                                 <Text style={{color: 'black'}}>인동</Text>
                             </TouchableOpacity>
@@ -183,7 +191,7 @@ const BottomSheet = (props) => {
 
                         <View style={{backgroundColor: 'white', height: '30%', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', marginRight: 35,}}>
                             <View style = {{borderRadius: 10, width: 81, height : 30, backgroundColor : "rgba(196, 196, 196, 0.31)", justifyContent: 'center', alignItems: 'center'}}>
-                                <Text>모집인원</Text>
+                                <Text style={styles.start_text}>모집인원</Text>
                             </View> 
 
                            <TouchableOpacity 
@@ -209,18 +217,20 @@ const BottomSheet = (props) => {
 
                         <View style={{height: '30%', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
                             <View style = {{borderRadius: 10, width: 81, height : 30, backgroundColor :"rgba(196, 196, 196, 0.31)", justifyContent: 'center', alignItems: 'center'}}>
-                                <Text>출발시간</Text>
-                            </View> 
+                                <Text style={styles.start_text}>출발시간</Text>
+                            </View>
+                          
                             <Input 
                                 containerStyle={{width: '65%', }} 
                                 value={CarpoolTicket.CarpoolTicket[0].arrival_time}
                                 onChangeText={(text) => setArrivalTime(CarpoolTicket.CarpoolTicket[0].arrival_time = text)}
                             />
+
                         </View>
 
                         <View style={{height: '30%', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
                             <View style = {{borderRadius: 10, width: 81, height : 30, backgroundColor : "rgba(196, 196, 196, 0.31)", justifyContent: 'center', alignItems: 'center'}}>
-                                <Text>오픈채팅</Text>
+                                <Text style={styles.start_text}>오픈채팅</Text>
                             </View> 
                             <Input 
                                 containerStyle={{width: '65%', }}
@@ -231,7 +241,7 @@ const BottomSheet = (props) => {
                         <View style={{backgroundColor: 'white', height: '30%', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
                             
                             <View style = {{borderRadius: 10, width: 81, height : 30, backgroundColor : "rgba(196, 196, 196, 0.31)", justifyContent: 'center', alignItems: 'center'}}>
-                                <Text>비밀번호</Text>
+                                <Text style={styles.start_text}>비밀번호</Text>
                             </View> 
                             <Input 
                                 containerStyle={{width: '65%', }}
@@ -241,12 +251,14 @@ const BottomSheet = (props) => {
                     </View>
 
                     <View style={{flex:0.2, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center'}}>
-                        <TouchableOpacity onPress={() => { Create(); closeModal(); alert("티켓 생성 하였습니다.");}} style={{backgroundColor: 'white', borderRadius: 10, borderWidth: 2, borderColor: 'black', width: 337, height: 60, alignItems :'center', justifyContent: 'center' }}><Text style={{color: 'black'}}>생성하기</Text></TouchableOpacity>
+                        <TouchableOpacity onPress={() => { Create(); closeModal(); alert("티켓 생성 하였습니다.");}} style={{backgroundColor: 'white', borderRadius: 10, borderWidth: 2, borderColor: 'black', width: 337, height: 60, alignItems :'center', justifyContent: 'center' }}><Text style={styles.start_text}>생성하기</Text></TouchableOpacity>
                     </View>
 
                 </Animated.View>
             </View>
+
         </Modal>
+
     )
 }
 
@@ -268,8 +280,13 @@ const styles = StyleSheet.create({
         justifyContent : 'space-around',
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
+    },        
+
+        start_text: {
+            fontSize: 13,
+            fontWeight: 'bold',
         
-    }
+    },
 })
 
 export default BottomSheet;

@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, TextInput 
 // 아이콘(원격주소)
 import { Fontisto } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+import { Octicons } from '@expo/vector-icons';
 //firebase
 import { db } from '../../Database/DatabaseConfig/firebase';
 import { doc, getDoc } from 'firebase/firestore';
@@ -67,6 +69,14 @@ export default function ProfileScreen({navigation})  {
         UserInfo.UserInfo[0].status_message = text;
     }
 
+    const ShowName = () => {
+        if (UserInfo.Driver[0].auth != "") {
+            return UserInfo.Driver[0].nickname;
+        } else {
+            return UserInfo.Pesinger[0].nickname;
+        }
+    };
+
     return (
      
         <View style={styles.container}>
@@ -76,51 +86,36 @@ export default function ProfileScreen({navigation})  {
             </View>
             
             
-            <View style={styles.header}>
-                
-                <Text style={styles.user_name_text}>박해준</Text>
-                <View style={{borderRadius: 10, width: '70%', height: '10%', marginTop : 10, justifyContent:'center', alignItems: 'center', backgroundColor: 'rgba(196, 196, 196, 0.31)'}}>
-                    <Text>{UserInfo.UserInfo[0].status_message === '' ? '소개' : UserInfo.UserInfo[0].status_message}</Text>
-                </View>
+            <View style={styles.body}>
 
-                
-                    
-                    <View style={styles.button}>
+                <Text style={styles.user_name_text}>{ShowName()}</Text>
 
-                        <View style={{backgroundColor: 'rgba(196, 196, 196, 0.31)', borderRadius: 10,  width: '80%', height: '50%', justifyContent: 'center', alignItems: 'center'}}>
-                            <Text>활동 내역</Text>
-                        </View>
-                        <TouchableOpacity 
-                            style={
-                                {
-                                    backgroundColor: 'rgba(196, 196, 196, 0.31)', 
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    width: 100,
-                                    height: '10%',
-                                    borderRadius: 10,
-                                    
-                                 }
-                            }
-                            onPress={() => {navigation.navigate('FixProfileScreen'); console.log('복귀 하였습니다.')}}
-                            >
-                            <Text style={{color: "black", fontSize: 14,}}>프로필 편집하기</Text>
-                            
-                        </TouchableOpacity>
-            </View>
+                 <View style={{backgroundColor: 'rgba(196, 196, 196, 0.31)', borderRadius: 10,  width: '100%', height: '50%', justifyContent: 'center', alignItems: 'center'}}>
+                    <Text>티켓 설명</Text>
+                </View> 
+
+                <TouchableOpacity style = {styles.button}>
+                    <Text style = {styles.button_text}>로그아웃</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style = {styles.button}>
+                    <Text  style = {styles.button_text}>회원탈퇴</Text>
+                </TouchableOpacity>        
 
 
         </View>
             <View style={styles.footer}>
                     
                     <TouchableOpacity onPress={() => navigation.navigate("Main")}>
-                        <Fontisto name="home" size={24} color="black" style={styles.home_icon}/>
+                    <Ionicons name="home-outline" size={24} color="black" />
                     </TouchableOpacity>
-                    
-                    <Fontisto  name="map" size={24} color="black" />
-                    
+
+                    <TouchableOpacity onPress={() => navigation.navigate("TicKetScreen")}>
+                        <Ionicons name="card-outline" size={24} color="black" />
+                    </TouchableOpacity>
+
                     <TouchableOpacity onPress={() => navigation.navigate("ProfileScreen")}>
-                        <Ionicons name="person-outline" size={24} color="black" style={styles.profile_icon}/>
+                        <FontAwesome name="user-circle-o" size={24} color="black" />
                     </TouchableOpacity>
             </View>
         </View>
@@ -133,11 +128,12 @@ const styles = StyleSheet.create( {
             flex: 1,
             backgroundColor: 'white',
         },
-        header: {
+        body: {
             flex: 1,
             alignItems: 'center',
-            top: 40,
-            backgroundColor: 'white',
+            margin: 40,
+
+
 
         },
         center: {
@@ -149,7 +145,6 @@ const styles = StyleSheet.create( {
         },
         profile_info: {
             flex:1,
-
             justifyContent: 'center',
             alignItems: 'center',
         },
@@ -166,17 +161,30 @@ const styles = StyleSheet.create( {
             marginTop: 10,
             color: 'black',
 
-        },
-        button: {
-            flex: 0.9,
-            width: '90%',
-            alignItems:'center',
-            justifyContent: 'space-evenly',
 
         },
+
+        button: {
+            width: 300,
+            height: 40,
+            borderWidth: 0.5,
+            borderRadius: 4,
+            margin: 3,
+            top: 20,
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: 'rgba(196, 196, 196, 0.2)'
+            
+        },
+     
+        button_text: {
+            color: 'black',
+            fontWeight: 'bold',
+
+        },
+
         ticket: {
             backgroundColor: '#FFFFFF',
-
             marginTop: 20,
             paddingVertical: 20,
             marginLeft:15,
@@ -185,19 +193,15 @@ const styles = StyleSheet.create( {
             
         },
         footer: {
-            height: '9%',
+            height: 80,
             flexDirection: 'row',
             justifyContent: 'space-around',
             alignItems: 'center',
-
             borderWidth: 0.3,
 
 
         },
 
-        messege_icon: {
-            marginLeft: 32,
-        },
         
     }
 );
