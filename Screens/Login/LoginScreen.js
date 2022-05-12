@@ -1,6 +1,6 @@
 // 학번 로그인 컴포넌트이다.
 
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { Input, Button } from 'react-native-elements';
 // firebase db 경로 불러오기
@@ -10,8 +10,10 @@ import { doc, getDoc, getDocFromCache } from 'firebase/firestore';
 // 회원정보 기본데이터 틀(기반) 불러오기
 import { UserInfo } from '../../Database/Data/User/userInfo';
 
+
 const LoginScreen = ({navigation}) => {
     const [ studentNumber, SetStudentNumber ] = useState(''); // 학번
+    const [ studentName, SetStudentName ] = useState(''); // 성명
 
     // 회원정보 기본데이터를 UserInfoDefaultData 변수로 선언 (로그인 성공하면 학번, 학과, 이름 값을 넣을 예정 (티켓 생성 할때 유용 할것 같다,))
     const DriverProfile = UserInfo.Driver[0];
@@ -57,13 +59,14 @@ const LoginScreen = ({navigation}) => {
 
       for (let i = 0; i < UserInfo.Driver_login.length; i++) {
         console.log(UserInfo.Driver_login[i].student_number);
-        if (UserInfo.Driver_login[i].student_number === studentNumber) {
+        if (UserInfo.Driver_login[i].student_number === studentNumber && UserInfo.Driver_login[i].nickname === studentName) {
           
           // 로그인 성공
           DriverProfile.nickname = UserInfo.Driver_login[i].nickname;
           DriverProfile.student_number = UserInfo.Driver_login[i].student_number;
           DriverProfile.department = UserInfo.Driver_login[i].department;
           DriverProfile.auth = UserInfo.Driver_login[i].auth;
+          DriverProfile.kakao_id = UserInfo.Driver_login[i].kakao_id;
 
           signIn = true;
 
@@ -74,13 +77,14 @@ const LoginScreen = ({navigation}) => {
       }
       for (let i = 0; i < UserInfo.Pesinger_login.length; i++) {
         console.log(UserInfo.Pesinger_login[i].student_number);
-        if (UserInfo.Pesinger_login[i].student_number === studentNumber) {
+        if (UserInfo.Pesinger_login[i].student_number === studentNumber && UserInfo.Pesinger_login[i].nickname === studentName) {
           
           // 로그인 성공
           PesingerProfile.nickname = UserInfo.Pesinger_login[i].nickname;
           PesingerProfile.student_number = UserInfo.Pesinger_login[i].student_number;
           PesingerProfile.department = UserInfo.Pesinger_login[i].department;
           PesingerProfile.auth = UserInfo.Pesinger_login[i].auth;
+          PesingerProfile.kakao_id = UserInfo.Pesinger_login[i].kakao_id;
 
           signIn = true;
 
@@ -95,41 +99,60 @@ const LoginScreen = ({navigation}) => {
     };
 
     return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={{fontWeight: 'bold', fontSize: 64, color: '#FFFFFF',}}>MATE</Text> 
-      </View>
-      <View style={styles.input_container}>
-        <Input
-          placeholder='학번'
-          leftIcon={{ type: 'material'}}   //name: 에 알맞는 명령어 입력시 아이콘 변경됨
-          value={studentNumber}
-          containerStyle={{width: '85%', marginRight: 10}}
-          onChangeText={Text => SetStudentNumber(Text)}
-        />
-      </View>
-      <View style={styles.button_container}>
-        <TouchableOpacity  
-          style={styles.button} 
-          onPress={
-            () => {
-              // 로그인 (학번을 보고 읽어온 회원 db를 하나씩 비교하는 알고리즘으로 설계 하였다.)
-              //Read();
-              SignIn();
-            }
-          }
-        >
-          <Text style={styles.text}>로그인</Text>
-        </TouchableOpacity>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "heigh"}
+      style={styles.container}
+    >
+      <TouchableWithoutFeedback 
+        onPress={Keyboard.dismiss}
+      >
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <Text style={{fontWeight: 'bold', fontSize: 64, color: '#FFFFFF',}}>MATE</Text> 
+          </View>
+          <View style={styles.input_container}>
+            <Input
+              placeholder='학번'
+              leftIcon={{ type: 'material'}}   //name: 에 알맞는 명령어 입력시 아이콘 변경됨
+              value={studentNumber}
+              containerStyle={{width: '85%', marginRight: 10}}
+              onChangeText={Text => SetStudentNumber(Text)}
+            />
+            <Input
+              placeholder='성명'
+              leftIcon={{ type: 'material'}}   //name: 에 알맞는 명령어 입력시 아이콘 변경됨
+              value={studentName}
+              containerStyle={{width: '85%', marginRight: 10}}
+              onChangeText={Text => SetStudentName(Text)}
+            />
+          </View>
+          <View style={styles.button_container}>
+            <TouchableOpacity  
+              style={styles.button} 
+              onPress={
+                () => {
+                  // 로그인 (학번을 보고 읽어온 회원 db를 하나씩 비교하는 알고리즘으로 설계 하였다.)
+                  //Read();
+                  SignIn();
+                  SetStudentNumber("");
+                  SetStudentName("");
+                }
+              }
+            >
+              <Text style={styles.text}>로그인</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity 
-          style={styles.button}
-          onPress={() => navigation.navigate("SignUpScreen")} 
-        >
-          <Text style={styles.text}>회원가입</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+            <TouchableOpacity 
+              style={styles.button}
+              onPress={() => navigation.navigate("SignUpScreen")} 
+            >
+              <Text style={styles.text}>회원가입</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+      
+    </KeyboardAvoidingView>  
   )
 }
 
@@ -137,6 +160,7 @@ export default LoginScreen;
 
 const styles = StyleSheet.create({
     button_container: {
+      flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
       marginTop: '15%',
@@ -165,7 +189,7 @@ const styles = StyleSheet.create({
     },
 
     header: {
-      flex: 0.7,
+      flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: '#315EFF',
@@ -173,6 +197,7 @@ const styles = StyleSheet.create({
     },
 
     input_container: {
+      flex: 0.3,
       justifyContent: 'center',
       alignItems: 'center',
       marginTop: '20%'

@@ -2,7 +2,7 @@
   "expo": {
     "name": "MateBeta",
     "slug": "MateBeta",
-    "version": "3.0.0",
+    "version": "10.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -17,16 +17,16 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.ikw.mate",
-      "buildNumber": "3.0.0"
+      "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      },
-      "package": "com.ikw.mate"
+      },     
+      "permissions":["CAMERA", "READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE"],
+      "package": "com.matealpha.imagine",
+      "versionCode":10
     },
     "web": {
       "favicon": "./assets/favicon.png"

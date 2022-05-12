@@ -1,4 +1,3 @@
-
 // 모듈 불러오는 부분, 현재 수정중
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, RefreshControl, Image, ImageBackground } from "react-native";
@@ -58,7 +57,7 @@ export default function Main({ navigation }) { // 정보 메인 부분
 
     
     const CarpoolCreateButton = () => {
-        setModalVisible(true);
+        navigation.navigate('TicketCreatScreen' )
         setTicket('카풀');
     };
 
