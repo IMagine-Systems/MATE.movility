@@ -234,24 +234,28 @@ export default function Main({ navigation }) { // 정보 메인 부분
                 userDoc.CarpoolTicket.slice(0).reverse().map(key => (
                     <TouchableOpacity onPress={() => pressTicket(key)}>
                         <View style={styles.ticket_container}> 
+                             <Ionicons style={{position:"absolute", alignSelf: "flex-start" , left:10, top: -4, }} name="bookmark" size={35} color="#315EFF" />
                             <View style={styles.ticket_info}>
-                                <View>
-                                    <Text style={{color: '#B9696D', fontWeight: 'bold'}}>{key.arrival_area}</Text>
-                                    <Text style={{color: '#B9696D', fontWeight: 'bold'}}>{key.arrival_time}</Text>
+                                <View style= {styles.ticket_info_text}>
+                                    <Text style={styles.ticket_info_font}>{key.arrival_area}</Text>
+                                    <Text style={styles.ticket_info_font}>{key.arrival_time}</Text>
                                 </View>
-                                <Feather name="arrow-right-circle"  size={20} color="black" /> 
-                                <View>
-                                    <Text style={{color: '#B9696D', fontWeight: 'bold'}}>{key.depart_area}</Text>
-                                    <Text style={{color: '#B9696D', fontWeight: 'bold'}}>{key.departure_time}</Text>
+
+                                <Feather name="arrow-right-circle" size={20} color="black" /> 
+
+                                <View style={styles.ticket_info_text}>
+                                    <Text style={styles.ticket_info_font}>{key.depart_area}</Text>
+                                    <Text style={styles.ticket_info_font}>{key.departure_time}</Text>
                                 </View>
                             </View>
 
 
-                            <View style={{flexDirection: "row", justifyContent:'space-around', marginTop: '10%'}}>
-                                <View> 
-                                    <Text style={{fontSize: 16, fontWeight: 'bold', color: 'black'}}>{key.nickname}</Text>
+                            <View style={styles.ticket_info}>
+                                <View style={styles.ticket_info_under}> 
+                                    <Text style={{bfontSize: 16, fontWeight: 'bold', color: 'black'}}>{key.nickname}</Text>
                                     <Text style={{fontSize: 15, color: 'black'}}>{key.department}</Text>
                                 </View>
+
                                 <View style={{  backgroundColor:'#315EFF',  width:50, height: 30, justifyContent: 'center', alignItems: 'center', borderRadius: 10}}><Text style={{fontSize: 20, color: 'white'}}>{key.pesinger_count}/{key.recruitment_count}</Text></View>
                            
                             </View>
@@ -307,10 +311,13 @@ export default function Main({ navigation }) { // 정보 메인 부분
                         onPress={() => pressTicket(key)}
                     >
                         <View style={styles.ticket_container}>
+                        
                             <View style={styles.ticket_info}>
+
                                 <Fontisto name="bookmark-alt" size={24} color="#EEC800" />
-                                <View style={{ marginHorizontal: 10, alignItems: 'center'}}>
+                                <View style={{ marginHorizontal: 10,  alignItems: 'center'}}>
                                     <Text >{key.nickname}</Text> 
+                                    
                                     <Text style={{fontSize: 8}}>{key.department}</Text>
                                 </View>
                     
@@ -336,13 +343,13 @@ export default function Main({ navigation }) { // 정보 메인 부분
   return (
     <View style={styles.container}>
         {/*Title 부분 */}
-        <ImageBackground style={{}} source={require('../../assets/mate_main.jpeg')} imageStyle={{borderBottomLeftRadius: 40}}>
-            <View style={{height: 200, width: 190,justifyContent: 'flex-end', marginLeft: 10, paddingBottom: 20}}>
-                <Text style={{fontSize: 32, color: 'white', fontWeight: 'bold'}}>MATE</Text>
-                <Text style={{fontSize: 13, color: 'white', fontWeight: 'bold'}}>오늘은 어떤 만남을 하시겠어요?</Text>
+        <ImageBackground style={styles.header} source={require('../../assets/mate_main.jpeg')} imageStyle={{borderBottomLeftRadius: 40}}>
+            <View style={styles.header_text}>
+                <Text style={{fontSize: 45, color: 'white', fontWeight: 'bold'}}>MATE</Text>
+                <Text style={{fontSize: 15, color: 'white', fontWeight: 'bold'}}>오늘은 어떤 만남을 하시겠어요?</Text>
             </View>
         </ImageBackground>
-        
+
         <View style={styles.ticket_create}>
             <View style={[styles.ticket_button]}>
                 <Text style={{fontSize: 22, color: 'rgba(0, 0, 0, 0.6)', backgroundColor: 'white'  }}>카풀 티켓 생성</Text>
@@ -363,10 +370,10 @@ export default function Main({ navigation }) { // 정보 메인 부분
         
         </View>
 
-        <View style={{flex: 0.9, alignItems: 'center', backgroundColor: 'white'}}>
+        <View style={styles.ticket_list}>
             <ScrollView refreshControl={<RefreshControl refreshing={refresh} onRefresh={() => runningRefresh()}/>}>
-                <ScrollView style={{}} showsVerticalScrollIndicator ={true}>
-                    <View style={{}}>
+                <ScrollView  showsVerticalScrollIndicator ={true}>
+                    <View style={styles.ticket_background}>
                         {showCarpoolTicket()}
                     </View>
                 </ScrollView>
@@ -398,10 +405,12 @@ export default function Main({ navigation }) { // 정보 메인 부분
                 style={{paddingHorizontal: 30}}
                 onPress={() => navigation.navigate("ProfileScreen")}
             >
-                <FontAwesome name="user-circle-o" size={24} color="black" />
+                <FontAwesome name="user-circle" size={24} color="black" />
             </TouchableOpacity>
             
         </View>
+    
+            
         
         <BottomSheet 
             modalVisible={modalVisible}
@@ -438,17 +447,38 @@ export default function Main({ navigation }) { // 정보 메인 부분
 const styles = StyleSheet.create({
     container: {
         flex:1,
+        
+    },
 
+    header: {
+        flex: 1,
+        justifyContent: 'flex-end',
+    },
+
+    header_text: {
+        left: 20,
+        bottom: 18,
     },
     
     ticket_create: {
-        flex : 0.15,
+        flex : 0.4,
         justifyContent : 'center',
-        backgroundColor: 'white',
         alignItems: 'center',
 
 
     },
+    ticket_list: {
+        flex : 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+        
+    },
+    
+    ticket_background: {
+        justifyContent: 'center',
+        flex:1,
+    },
+
     footer: {
         height: 80,
         flexDirection: 'row',
@@ -460,9 +490,9 @@ const styles = StyleSheet.create({
     },
     ticket_button: {
         flex: 0.8,
-        width : '80%',
-        backgroundColor: 'white',
-
+        height: 50,
+        width : 350,
+        backgroundColor: "white",
         borderRadius: 15,
         flexDirection: 'row',
         justifyContent: 'space-around',
@@ -472,170 +502,11 @@ const styles = StyleSheet.create({
         elevation: 9,
     },
 
-    text1: {
-        marginLeft: 15,
-        fontSize: 24,
-        color: '#315EFF',        
-        fontWeight: 'bold',
-        marginTop: 47,
-        color: 'black',
-    },
-    map_icon: {
-        fontSize: 24,
-        marginTop: 47,
-        color: 'black',
-        justifyContent: 'space-between',
-        marginRight: 20,
-    },
-    bell_icon: {
-        fontSize: 24,
-        marginTop: 47,
-        color: 'black',
-        justifyContent: 'space-between',
-        marginRight: 42,
-    },
-    
-    text_input_container: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: 'white',
-        marginTop: 8,
-        borderBottomColor: '#C4C4C4',
-    },
-    input_start: {
-        width: 137.5,
-        height: 33,
-        backgroundColor: 'black',
-        paddingLeft: 10,
-        fontSize: 16,
-        marginLeft: 18,
-        marginTop: 13.5,
-        borderRadius: 8,
-    },
-   
-    selection_text: {
-        flexDirection: 'row',
-        width: 345,
-        height: 40,
-        margin: 5,
-    },
-    status_bar: {
-        width: 47.75,
-        height: 3.72,
-        backgroundColor: '#315EFF',
-        marginTop: 5.95,
-    
-        
-    },
-    
-    selection_text_all: {
-       marginLeft: 50,
-    },
+  
 
-    selection_text_carpool: {
-        marginLeft: 50,
-    },
-    selection_text_taxi: {
-        marginLeft: 50,
-    },
-    
-    carpool_text: {
-        paddingHorizontal: 30.3,
-        paddingVertical: 10.3,
-        backgroundColor: 'black',
-        marginBottom: 14,
-        justifyContent: 'space-between',
-        borderWidth: 1,
-        marginLeft: 6,
-        marginRight: 6,
-        borderRadius: 18,
-       
-    },
-    info_text1: {
-        
-        marginTop: 11,
-        marginLeft: 14.12,
-    },
-    info_text2: {
-        marginTop: 5,
-        marginLeft: 14.12,
-        fontSize: 8,
-    },
-    info_profile: {
-        resizeMode: 'stretch', 
-        width: 33.8, 
-        height: 35.2, 
-        borderRadius: 25,
 
-        
-    },
-    info_text_container: {
-        flexDirection: 'column',
-        
-    },
-    info_carpool_container: {
-        marginTop: 14,
-        width: 65,
-        height: 30,
-        alignItems: 'center',
-        justifyContent: 'center'
-     
-    },
-    info_carpool_text: {
-        fontSize: 18,
-    },
-    carpool_pointvar: {
-        backgroundColor: '#315EFF',
-        width: 47,
-        height: 4.09,
-        marginTop: 6.17,
-        borderRadius: 10,
-    },
-    taxi_pointvar: {
-        backgroundColor: '#8bc34a',
-        width: 47,
-        height: 4.09,
-        marginTop: 6.17,
-        borderRadius: 10,
-    },
-    info_text_local: {
-        
-        width: 65,
-        height: 15.4,
-        marginTop: 11,
-        marginLeft: 14.12,
-        color: '#B9696D',
-
-    },
-    info_time_text: {
-        width: 40,
-        height: 11,
-        fontSize: 11,
-        marginLeft: 17.12,
-        marginTop: 6.6,
-
-    },
-
-    info_car_img: {
-        resizeMode: 'stretch', 
-        width: 200.8, 
-        height: 130.2, 
-    },
-
-    count_container: {
-        width: 32,
-        height: 35,
-        backgroundColor: '#315EFF',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 8,
-        marginTop: 11,
-        marginLeft: 25,
-        marginRight: 20,
-
-        
-    },
     ticket_container: {
+        flex: 1,
         backgroundColor: 'white',
         width: 330,
         height: 150,
@@ -648,11 +519,30 @@ const styles = StyleSheet.create({
 
     },
     ticket_info: {
+        flex: 1,
         flexDirection: 'row',
-        marginTop: 15,
         justifyContent: 'space-around',
-
+        alignItems: "center",
+        
 
     },
+
+    ticket_info_under: {
+
+        flex: 0.6,
+    },
+   
+    ticket_info_text: {
+       textAlign: "center",
+       flex: 0.5,
+       
+    },
+
+    ticket_info_font: {
+        alignSelf: "center",
+        fontWeight: "bold",
+        color: "#B9696D",
+    }
+  
 });
 

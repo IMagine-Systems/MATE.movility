@@ -221,18 +221,20 @@ export default function TicketScreen({navigation})  {
 
 
             <View style={styles.footer}>
-                <TouchableOpacity onPress={() => navigation.navigate("Main")}>
-                    <Ionicons name="home-outline" size={24} color="black" />
-                </TouchableOpacity>
+            
+            <TouchableOpacity onPress={() => navigation.navigate("Main")}>
+                <Ionicons name="home-outline" size={24} color="black" />
+            </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => navigation.navigate("TicKetScreen")}>
-                    <Ionicons name="card" size={24} color="black" />
-                </TouchableOpacity>
-                
-                <TouchableOpacity onPress={() => navigation.navigate("ProfileScreen")}>
-                    <FontAwesome name="user-circle" size={24} color="black" />
-                </TouchableOpacity>
-            </View>
+            <TouchableOpacity onPress={() => navigation.navigate("TicKetScreen")}>
+                <Ionicons name="card" size={24} color="black" />
+            </TouchableOpacity>
+            
+            <TouchableOpacity onPress={() => navigation.navigate("ProfileScreen")}>
+                <FontAwesome name="user-circle" size={24} color="black" />
+            </TouchableOpacity>
+            
+        </View>
             
         </View>
     );
@@ -279,6 +281,7 @@ const styles = StyleSheet.create( {
             flex: 1,
             textAlign: 'center',
             fontWeight: 'bold',
+            backgroundColor : "red",
         },
         
         chatInfo: {

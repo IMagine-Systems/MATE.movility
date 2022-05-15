@@ -14,7 +14,9 @@ import {
     Keyboard,
     Platform,
 } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { FontAwesome } from '@expo/vector-icons'; 
+import { Ionicons } from '@expo/vector-icons'; 
 import { Input } from 'react-native-elements';
 import { db } from '../../Database/DatabaseConfig/firebase';
 import { doc, getDoc, setDoc, upDateDoc, arrayUnion, updateDoc, arrayRemove } from 'firebase/firestore';
@@ -529,170 +531,194 @@ export default function TicketUpdateScreen({navigation}) {
     }
 
     return (
-        <KeyboardAvoidingView
-            behavior={(Platform.OS === "ios") ? "padding" : "height"}
-            style={styles.container}
-        >
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-
-                <View style={styles.container}>
-                    <View style={styles.header}>
-                        <View style={{flexDirection : 'row', justifyContent:'space-evenly', alignItems: 'center', bottom: 10}}>
-                            <FontAwesome style={{backgroundColor: 'white',}} name="circle" size={15} color="#587DFF" />
-                            <Text>출발지</Text>
-                            <TouchableOpacity onPress={() => { button = 1; SetStartLocalSelect();}} style={StartInputButtonOneColor()}>
-                                <Text style={startInputSelect[0] ? {color: 'white'} : {color: 'black'}}>인동</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => { button = 2; SetStartLocalSelect();}} style={StartInputButtonTwoColor()}>
-                                <Text style={startInputSelect[1] ? {color: 'white'} : {color: 'black'}}>옥계</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => { button = 3; SetStartLocalSelect();}} style={StartInputButtonThreeColor()}>
-                                <Text style={startInputSelect[2] ? {color: 'white'} : {color: 'black'}}>본관</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => { button = 4; SetStartLocalSelect();}} style={StartInputButtonFourColor()}>
-                                <Text style={startInputSelect[3] ? {color: 'white'} : {color: 'black'}}>항공관</Text>
-                            </TouchableOpacity>
-                        </View>
-
-                        <View style={{ flexDirection : 'row', justifyContent:'space-evenly', alignItems: 'center', }}>
-                            <FontAwesome style={{backgroundColor: 'white',}} name="circle" size={15} color="#587DFF" />
-                            <Text>도착지</Text>
-                            <TouchableOpacity onPress={() => { button = 1; SetEndLocalSelect();}} style={EndInputButtonOneColor()}>
-                                <Text style={endInputSelect[0] ? {color: 'white'} : {color: 'black'}}>인동</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => { button = 2; SetEndLocalSelect();}} style={EndInputButtonTwoColor()}>
-                                <Text style={endInputSelect[1] ? {color: 'white'} : {color: 'black'}}>옥계</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => { button = 3; SetEndLocalSelect();}} style={EndInputButtonThreeColor()}>
-                                <Text style={endInputSelect[2] ? {color: 'white'} : {color: 'black'}}>본관</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => { button = 4; SetEndLocalSelect();}} style={EndInputButtonFourColor()}>
-                                <Text style={endInputSelect[3] ? {color: 'white'} : {color: 'black'}}>항공관</Text>
-                            </TouchableOpacity>
-                        </View>
+ 
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <KeyboardAwareScrollView>
+            <View style={styles.container}>
+                <View style={styles.header}>
+                    <TouchableOpacity
+                            style={{top: 24, left: 10,}}
+                            onPress={() => navigation.navigate("Main")}
+                        >
+                                <Ionicons  name="arrow-back" size={35} color="black" />
+                
+                        </TouchableOpacity> 
+                    <View style={{flexDirection : 'row', justifyContent:'space-evenly', alignItems: 'center',  }}>
+                        <FontAwesome style={{backgroundColor: 'white',}} name="circle" size={15} color="#587DFF" />
+                        <Text>출발지</Text>
+                        <TouchableOpacity onPress={() => { button = 1; setStartLocalSelect();}} style={StartInputButtonOneColor()}>
+                            <Text style={startInputSelect[0] ? {color: 'white'} : {color: 'black'}}>인동</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => { button = 2; setStartLocalSelect();}} style={StartInputButtonTwoColor()}>
+                            <Text style={startInputSelect[1] ? {color: 'white'} : {color: 'black'}}>옥계</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => { button = 3; setStartLocalSelect();}} style={StartInputButtonThreeColor()}>
+                            <Text style={startInputSelect[2] ? {color: 'white'} : {color: 'black'}}>본관</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => { button = 4; setStartLocalSelect();}} style={StartInputButtonFourColor()}>
+                            <Text style={startInputSelect[3] ? {color: 'white'} : {color: 'black'}}>항공관</Text>
+                        </TouchableOpacity>
                     </View>
 
-                    <View style={styles.body}>
-                        <View style={{ flex:1, justifyContent : 'space-evenly',}}>
-                            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', marginRight: 35,}}>
-                                <View style = {{borderRadius: 10, width: 55, height : 30, backgroundColor : "rgba(196, 196, 196, 0.31)", justifyContent: 'center', alignItems: 'center'}}>
-                                    <Text>모집인원</Text>
-                                </View> 
+                    <View style={{ flexDirection : 'row', justifyContent:'space-evenly', alignItems: 'center'}}>
+                        <FontAwesome style={{backgroundColor: 'white',}} name="circle" size={15} color="#587DFF" />
+                        <Text>도착지</Text>
+                        <TouchableOpacity onPress={() => { button = 1; setEndLocalSelect();}} style={EndInputButtonOneColor()}>
+                            <Text style={endInputSelect[0] ? {color: 'white'} : {color: 'black'}}>인동</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => { button = 2; setEndLocalSelect();}} style={EndInputButtonTwoColor()}>
+                            <Text style={endInputSelect[1] ? {color: 'white'} : {color: 'black'}}>옥계</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => { button = 3; setEndLocalSelect();}} style={EndInputButtonThreeColor()}>
+                            <Text style={endInputSelect[2] ? {color: 'white'} : {color: 'black'}}>본관</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => { button = 4; setEndLocalSelect();}} style={EndInputButtonFourColor()}>
+                            <Text style={endInputSelect[3] ? {color: 'white'} : {color: 'black'}}>항공관</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                
+                <View style={styles.body}>
+                    <View style={{ flex:1, justifyContent : 'space-between',}}>
+                        <View style={{flex: 0.1, backgroundColor: 'white', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', marginRight: 35,}}>
+                            <View style = {{borderRadius: 10, width: 55, height : 30, backgroundColor : "rgba(196, 196, 196, 0.31)", justifyContent: 'center', alignItems: 'center'}}>
+                                <Text>모집인원</Text>
+                            </View> 
 
-                                <TouchableOpacity 
-                                    onPress={() => {
-                                                UserInfo.Driver[0].recruitment_count = 1;
-                                                setRescruitmentButton([true, false, false, false]);
-                                            }
-                                        }
-                                    style={RecruitmentButtonOneColor()}><Text style={rescruitmentButton[0] ? {color: 'white'} : {color: 'black'}}>1</Text>
-                                </TouchableOpacity>
-
-                                <TouchableOpacity 
-                                    onPress={() => {
-                                                UserInfo.Driver[0].recruitment_count = 2;
-                                                setRescruitmentButton([false, true, false, false]);
-                                            }
-                                        }
-                                    style={RecruitmentButtonTwoColor()}><Text style={rescruitmentButton[1] ? {color: 'white'} : {color: 'black'}}>2</Text>
-                                </TouchableOpacity>
-
-                                <TouchableOpacity 
-                                    onPress={() => {
-                                            UserInfo.Driver[0].recruitment_count = 3;
-                                            setRescruitmentButton([false, false, true, false]);
-                                        }
-                                    }
-                                    style={RecruitmentButtonThreeColor()}><Text style={rescruitmentButton[2] ? {color: 'white'} : {color: 'black'}}>3</Text>
-                                </TouchableOpacity>
-
-                                <TouchableOpacity 
-                                    onPress={() => {
-                                            UserInfo.Driver[0].recruitment_count = 4;
-                                            setRescruitmentButton([false, false, false, true]);
+                            <TouchableOpacity 
+                                onPress={() => {
+                                            UserInfo.Driver[0].recruitment_count = 1;
+                                            setRescruitmentButton([true, false, false, false]);
                                         }
                                     }
-                                    style={RecruitmentButtonFourColor()}><Text style={rescruitmentButton[3] ? {color: 'white'} : {color: 'black'}}>4</Text>
-                                </TouchableOpacity>
-                            </View>
+                                style={RecruitmentButtonOneColor()}><Text style={rescruitmentButton[0] ? {color: 'white'} : {color: 'black'}}>1</Text>
+                            </TouchableOpacity>
 
-                            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
-                                <View style = {{borderRadius: 10, width: 55, height : 30, backgroundColor :"rgba(196, 196, 196, 0.31)", justifyContent: 'center', alignItems: 'center'}}>
-                                    <Text>출발시간</Text>
-                                </View> 
-                                <Input 
-                                    containerStyle={{width: '65%', }} 
-                                    value={arrivaltime}
-                                    onChangeText={(text) => setArrivalTime(CarpoolTicket.CarpoolTicket[0].arrival_time = text)}
-                                />
-                            </View>
+                            <TouchableOpacity 
+                                onPress={() => {
+                                            UserInfo.Driver[0].recruitment_count = 2;
+                                            setRescruitmentButton([false, true, false, false]);
+                                        }
+                                    }
+                                style={RecruitmentButtonTwoColor()}><Text style={rescruitmentButton[1] ? {color: 'white'} : {color: 'black'}}>2</Text>
+                            </TouchableOpacity>
 
-                            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
-                                <View style = {{borderRadius: 10, width: 55, height : 30, backgroundColor : "rgba(196, 196, 196, 0.31)", justifyContent: 'center', alignItems: 'center'}}>
-                                    <Text>오픈채팅</Text>
-                                </View> 
-                                <Input 
+                            <TouchableOpacity 
+                                onPress={() => {
+                                        UserInfo.Driver[0].recruitment_count = 3;
+                                        setRescruitmentButton([false, false, true, false]);
+                                    }
+                                }
+                                style={RecruitmentButtonThreeColor()}><Text style={rescruitmentButton[2] ? {color: 'white'} : {color: 'black'}}>3</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity 
+                                onPress={() => {
+                                        UserInfo.Driver[0].recruitment_count = 4;
+                                        setRescruitmentButton([false, false, false, true]);
+                                    }
+                                }
+                                style={RecruitmentButtonFourColor()}><Text style={rescruitmentButton[3] ? {color: 'white'} : {color: 'black'}}>4</Text>
+                            </TouchableOpacity>
+                        </View>
+                        
+                        
+                        <View style={{flex: 0.1, backgroundColor: 'white', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
+                            <View style = {{borderRadius: 10, width: 55, height : 30, backgroundColor :"rgba(196, 196, 196, 0.31)", justifyContent: 'center', alignItems: 'center'}}>
+                                <Text>출발시간</Text>
+                            </View> 
+    
+                                
+                            <Input 
+                                containerStyle={{width: '65%', }} 
+                                value={arrivaltime}
+                                onChangeText={(text) => setArrivalTime(CarpoolTicket.CarpoolTicket[0].arrival_time = text)}
+                            />
+                        </View>
+
+                        <View style={{flex: 0.1, backgroundColor: 'white', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
+                            <View style = {{borderRadius: 10, width: 55, height : 30, backgroundColor : "rgba(196, 196, 196, 0.31)", justifyContent: 'center', alignItems: 'center'}}>
+                                <Text>오픈채팅</Text>
+                            </View> 
+                            <Input 
                                     containerStyle={{width: '65%', }}
                                     value={openChatName}
                                     onChangeText={(text) => setOpenChatName(text)} 
                                 />    
-                            </View>
+                        </View>
 
-                            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
-                                
-                                <View style = {{borderRadius: 10, width: 55, height : 30, backgroundColor : "rgba(196, 196, 196, 0.31)", justifyContent: 'center', alignItems: 'center'}}>
-                                    <Text>비밀번호</Text>
-                                </View> 
-                                <Input 
+                        <View style={{ flex: 0.1, backgroundColor: 'white', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
+                            
+                            <View style = {{borderRadius: 10, width: 55, height : 30, backgroundColor : "rgba(196, 196, 196, 0.31)", justifyContent: 'center', alignItems: 'center'}}>
+                                <Text>비밀번호</Text>
+                            </View> 
+                            <Input 
                                     containerStyle={{width: '65%', }}
                                     value={openChatPassword}
                                     onChangeText={(text) => setOpenChatPassword(text)}
                                 />
-                            </View>
                         </View>
-                    </View>
 
-                    <View style={styles.footer}>
-                        <View style={{flex: 0.5, justifyContent: 'center', alignItems: 'center' }}>
-                            <TouchableOpacity 
-                                onPress={() => { 
-                                    UpdateTicekt();
-                                    
-                                }} 
-                                style={
-                                    {
-                                        backgroundColor: 'white', borderRadius: 10, borderWidth: 2, borderColor: 'black', width: 337, height: 60, alignItems :'center', justifyContent: 'center' 
-                                    }
-                                }>
-                                    <Text style={{color: 'black'}}>수정완료</Text>
-                            </TouchableOpacity>
-                        </View>
+                    </View>
+                    
+                </View>
+                
+              
+        
+                <View style={styles.footer}>
+                    <View style={{justifyContent: 'center', alignItems: 'center' }}>
+                        <TouchableOpacity 
+                                
+                            style={
+                                {
+                                    backgroundColor: 'white', borderRadius: 10, borderWidth: 2, borderColor: 'black', width: 337, height: 60, alignItems :'center', justifyContent: 'center' 
+                                }
+                            }>
+                                <Text style={{color: 'black'}}>수정완료</Text>
+                        </TouchableOpacity>
+                        
                     </View>
                 </View>
-            </TouchableWithoutFeedback>
-        </KeyboardAvoidingView>
-    );
-    
-    
+        
+          
+            </View>
+            </KeyboardAwareScrollView>
+        </TouchableWithoutFeedback>
+
+
+
+
+);
+
+
 }
 const styles = StyleSheet.create({
-        container: {
-            flex: 1,
-        },
+container: {
+    height: 900,
+    backgroundColor : 'white',
 
-        header: {
-            flex: 0.2,
-            justifyContent: 'flex-end'
-        },
+},
 
-        body: {
-            flex: 0.6,
-        },
-        
-        footer: {
-            flex: 0.2,
-            justifyContent: 'center'
-        },
 
-    }
+
+header: {
+    flex: 0.3,
+    backgroundColor: 'white',
+    justifyContent: "space-evenly",
+
+},
+
+body: {
+    flex: 0.4,
+    backgroundColor: 'white',
+    marginTop: 20,
+},
+
+footer: {
+    flex: 0.5,
+    justifyContent: 'center',
+    backgroundColor: 'white',
+},
+
+}
 );

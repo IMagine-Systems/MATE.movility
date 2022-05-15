@@ -57,24 +57,21 @@ export default function TicketDefaultScreen({navigation})  {
                 <Text style={styles.text}>새로운 만남이{"\n"}{ShowName()}님을{"\n"} 기다리고 있어요</Text>
             </View>
             <View style={styles.footer}>
-                <TouchableOpacity
-                    style={{paddingHorizontal: 30}}
-                    onPress={() => navigation.navigate("Main")}
-                >
-                    <Ionicons name="home" size={24} color="black" />
-                </TouchableOpacity>
-                
-                <View style={{paddingHorizontal: 30}}>
-                    <Ionicons onPress={() => navigation.navigate("TicketScreen")} name="card-outline" size={30} color="black" />
-                </View>
-        
-                <TouchableOpacity 
-                    style={{paddingHorizontal: 30}}
-                    onPress={() => navigation.navigate("ProfileScreen")}
-                >
-                    <FontAwesome name="user-circle-o" size={24} color="black" />
-                </TouchableOpacity>
-            </View>
+            
+            <TouchableOpacity onPress={() => navigation.navigate("Main")}>
+                <Ionicons name="home-outline" size={24} color="black" />
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => navigation.navigate("TicKetScreen")}>
+                <Ionicons name="card" size={30} color="black" />
+            </TouchableOpacity>
+            
+            <TouchableOpacity onPress={() => navigation.navigate("ProfileScreen")}>
+                <FontAwesome name="user-circle" size={24} color="black" />
+            </TouchableOpacity>
+            
+        </View>
+            
         </View>
     );
 }

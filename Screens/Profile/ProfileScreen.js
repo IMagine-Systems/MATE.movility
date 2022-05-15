@@ -18,6 +18,8 @@ export default function ProfileScreen({navigation})  {
     const [ deleted, setDeleted ] = useState(false);
 
     const isFocused = useIsFocused();
+
+    const [ showTicketScreen, setShowTicketScreen ] = useState(false);
     
     useEffect(() => {
         Read();
@@ -35,6 +37,8 @@ export default function ProfileScreen({navigation})  {
 
     // 데아터 문서 읽어오기
     const Read = () => {
+        
+        
         const myDoc = doc(db, "CollectionNameCarpoolTicket", "CarpoolTicketDocument");
         
         getDoc(myDoc)
@@ -60,6 +64,8 @@ export default function ProfileScreen({navigation})  {
             ]
         );
     }
+
+    
 
     const DeleteAccount = () => {
         if (UserInfo.Driver[0].auth === 'driver') {
@@ -169,8 +175,15 @@ export default function ProfileScreen({navigation})  {
                     <Ionicons name="home-outline" size={24} color="black" />
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => navigation.navigate("TicKetScreen")}>
-                        <Ionicons name="card-outline" size={24} color="black" />
+                    <TouchableOpacity onPress={() =>{
+                    if (showTicketScreen != true) {
+                        navigation.navigate("TicketDefaultScreen");
+                    } else {
+                        navigation.navigate("TicketScreen");
+                    }
+                }
+            }>
+                        <Ionicons name="card-outline" size={30} color="black" />
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => navigation.navigate("ProfileScreen")}>
