@@ -774,35 +774,43 @@ const TicketBottomSheet = (props) => {
                     {...panResponders.panHandlers}
                 >
                     <View style={styles.container}>
-                        <View>
-                            <View style={styles.start_local_container}>
+                        <View style={styles.header}>
+
                                 <View style={styles.start_local}>
                                     <FontAwesome style={{backgroundColor: 'white',}} name="circle" size={15} color="#587DFF" />
                                     <View style={styles.start_text_container}>
                                         <Text style={styles.start_text}>출발지</Text>
                                     </View>
+
                                     <View style={styles.arrival_area_container}>
                                         <View style={styles.arrival_area}>
                                             <Text style={default_data.arrival_area != '항공관' ? {padding: 10, paddingHorizontal: 25, color: '#FFFFFF',fontWeight: 'bold'} : {padding: 10, paddingHorizontal: 20, color: '#FFFFFF',fontWeight: 'bold'}}>{data === undefined ? default_data.arrival_area : data.arrival_area}</Text>
                                         </View>
                                     </View>
                                 </View>
-                            </View>
+
+
                             <View style={styles.end_local}>
                                 <FontAwesome style={{backgroundColor: 'white',}} name="circle" size={15} color="#587DFF" />
                                 <View style={styles.end_text_container}>
                                     <Text style={styles.start_text}>도착지</Text>
                                 </View>
+
                                 <View style={styles.depart_area_container}>
                                     <View style={styles.depart_area}>
                                         <Text style={default_data.depart_area != '항공관' ? {padding: 10, paddingHorizontal: 25, color: '#FFFFFF',fontWeight: 'bold'} : {padding: 10, paddingHorizontal: 20, color: '#FFFFFF',fontWeight: 'bold'}}>{data === undefined ? default_data.depart_area : data.depart_area}</Text>
                                     </View>
                                 </View>                            
                             </View>
+                        
+                        </View>
+                        
+                        <View style={styles.body}>
                             <View style={styles.recruitment_count_container}>
                                 <View style={styles.recruitment_count_text_container}>
                                     <Text style={styles.recruitment_count_text}>인원</Text>
                                 </View>
+
                                 <View style={styles.recruitment_count}>
                                     <View style={RecruitmentCountOneColor()}>
                                         <Text style={RecruitmentCountTextOneColor()}>1</Text>
@@ -818,39 +826,42 @@ const TicketBottomSheet = (props) => {
                                     </View>                                                            
                                 </View>
                             </View>
-                            <View style={styles.time_container}>
-                                <View style={{flexDirection: 'row'}}>
-                                    <View style={styles.arrival_time_text}>
-                                        <Text style={{fontWeight: 'bold'}}>출발 시간</Text>
-                                    </View>
-                                    <View style={styles.arrival_time_container}>
-                                        <Text>{data === undefined ? default_data.arrival_time : data.arrival_time}</Text>
-                                    </View>
+
+
+
+
+                            <View style={{flexDirection: 'row', flex: 1,}}>
+                                <View style={styles.arrival_time_text}>
+                                    <Text style={{fontWeight: 'bold'}}>출발 시간</Text>
                                 </View>
-                    
-                                <View style={{flexDirection: 'row', marginTop: '5%'}}>
-                                    <View style={styles.estimated_time_text}>
-                                        <Text style={{fontWeight: 'bold'}}>예상 소요시간</Text>
-                                    </View>
-                                    <View style={styles.estimated_time_conatainer}>
-                                        <Text>{data === undefined ? default_data.departure_time : data.departure_time}</Text>
-                                    </View>
+                                <View style={styles.arrival_time_container}>
+                                    <Text>{data === undefined ? default_data.arrival_time : data.arrival_time}</Text>
                                 </View>
                             </View>
+                
+                            <View style={{flexDirection: 'row', flex: 1,}}>
+                                <View style={styles.estimated_time_text}>
+                                    <Text style={{fontWeight: 'bold'}}>예상 소요시간</Text>
+                                </View>
+                                
+                                <View style={styles.estimated_time_conatainer}>
+                                    <Text>{data === undefined ? default_data.departure_time : data.departure_time}</Text>
+                                </View>
+                            </View>
+
+
                             <View style={styles.driver_info_container}>
-                                <View style={{marginLeft: '2%'}}>
-                                    <Text style={{marginBottom: '10%', marginTop: '10%'}}>{data === undefined ? default_data.nickname : data.nickname}</Text>
+                                <View>
+                                    <Text>{data === undefined ? default_data.nickname : data.nickname}</Text>
                                     <Text>{data === undefined ? default_data.department : data.department}</Text>
                                 </View>
-                                <View style={styles.driver_charater}>
-                                    <Text>조용히 갈게요</Text>
-                                </View>
-                            </View>
-                            <View style={styles.recruitment_button_container}>
-                                {ShowTicketRecruitmentButton()}
-                                {ShowUpdateTicketButton()}
-                            </View>
                         </View>
+
+                        </View>
+                        <View style={styles.recruitment_button_container}>
+                            {ShowTicketRecruitmentButton()}
+                            {ShowUpdateTicketButton()}
+                        </View>   
                     </View>
                 </Animated.View>
             </View>
@@ -864,49 +875,66 @@ const styles = StyleSheet.create({
         justifyContent: "flex-end",
         backgroundColor: "rgba(0, 0, 0, 0.4)"
     },
+
     background: {
         flex: 1,
     },
+
+
     bottomSheetContainer: {
-        height: 600,
+        flex: 2,
         // justifyContent: "center",
         // alignItems: "center",
-        backgroundColor: 'white',
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30,   
+        
     },
-    start_local_container: {
-        marginTop: '4%'
+    header: {
+        flex: 1,
+        width: "90%",
+        justifyContent: "space-around",
+        left: 6,
+
+
+    },
+    container: {
+        flex:1,
+        backgroundColor:"white",
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+        
     },
     start_local: {
+        width: "60%",
         flexDirection: 'row',
-        marginLeft: '4%',
-        width: '90%',
-        borderBottomWidth: 2,
         borderColor: '#C4C4C44F',
-        padding: '2%',
         alignItems: 'center',
+        justifyContent: "space-around",
+        
     },
+   
+
     end_local: {
+        width: "60%",
         flexDirection: 'row',
-        marginLeft: '4%',
-        width: '90%',
-        borderBottomWidth: 2,
         borderColor: '#C4C4C44F',
-        padding: '2%',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: "space-around",
+    
         
     },
     start_text_container: {
-        marginHorizontal: '2%',
+
     },
+
     start_text: {
         fontSize: 13,
         fontWeight: 'bold',
     },
+
     end_text_container: {
-        marginHorizontal: '2%',
+
+
     },
+
     end_text: {
         fontSize: 13,
         fontWeight: 'bold',
@@ -921,94 +949,116 @@ const styles = StyleSheet.create({
 
     depart_area_container: {
 
+
+
     },
+
+    body: {
+        flex: 2,
+        width: "90%",
+        justifyContent: "space-around",
+        alignSelf: "center",
+        
+
+    },
+
     depart_area: {
         backgroundColor: '#315EFF',
         borderRadius: 15,
+
     },
     recruitment_count_container: {
-        marginLeft: '4%',
-        width: '90%',
-        padding: '2%',
-        paddingTop: '5%',
+        flex: 1,
         flexDirection: 'row',
+        
     },
+
     recruitment_count_text_container: {
         backgroundColor: '#C4C4C4',
         borderRadius: 15,
-        width: '20%', 
-        height: 30, 
+        height: 30,
+        alignSelf: "center",
+        flex:0.3,
         justifyContent: 'center', 
         alignItems: 'center'
     },
+
     recruitment_count_text: {
         fontWeight: 'bold',
+
+
     },
+
     recruitment_count: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-evenly',
-        width: '65%',
+        flex: 1,
         
     },
     time_container: {
-        marginLeft: '4%',
-        width: '90%',
-        padding: '2%',
-        paddingTop: '5%',
-        paddingBottom: '5%',
+        backgroundColor:"blue",
+
     },
     arrival_time_text: {
         backgroundColor: '#C4C4C4',
-        width: '20%',
         height: 30,
+        alignSelf: "center",
+        flex:0.3,
         justifyContent: 'center',
         alignItems: 'center',
+        alignSelf: "center",
         borderRadius: 15
+        
     },
+
     arrival_time_container: {
         justifyContent: 'center',
         alignItems: 'center',
-        width: '60%',
-        marginLeft: '20.1%',
+        flex: 1,
         borderBottomWidth: 2,
-        borderColor: '#C4C4C44F'
+        borderColor: '#C4C4C44F',
+
     },
+
     estimated_time_text: {
         backgroundColor: '#C4C4C4',
-        width: '25%',
+        flex: 0.3,
         height: 30,
+        alignSelf: "center",
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 15
     },
+
     estimated_time_conatainer: {
         justifyContent: 'center',
         alignItems: 'center',
-        width: '60%',
-        marginLeft: '15.1%',
+        flex: 1,
         borderBottomWidth: 2,
-        borderColor: '#C4C4C44F'
+        borderColor: '#C4C4C44F',
+        
     },
+
     driver_info_container: {
-        marginLeft: '4%',
-        width: '90%',
-        paddingVertical: '8%',
+
         flexDirection: 'row',
         alignItems: 'center'
     },
+
     driver_charater: {
         backgroundColor: '#C4C4C4',
         marginLeft: '32%',
         padding: '2%',
         borderRadius: 15
     },
-    recruitment_button_container: {
 
-        marginLeft: '4%',
-        width: '90%',
+    recruitment_button_container: {
+        flex:1,
         alignItems: 'center',
+        justifyContent: "space-evenly",
     },
+
     button_container: {
         backgroundColor: '#FFFFFF',
         width: '70%', height: 40,

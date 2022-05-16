@@ -227,7 +227,7 @@ export default function TicketScreen({navigation})  {
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => navigation.navigate("TicKetScreen")}>
-                <Ionicons name="card" size={24} color="black" />
+                <Ionicons name="card" size={30} color="black" />
             </TouchableOpacity>
             
             <TouchableOpacity onPress={() => navigation.navigate("ProfileScreen")}>
