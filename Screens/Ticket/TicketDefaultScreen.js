@@ -32,11 +32,11 @@ export default function TicketDefaultScreen({navigation})  {
                     style={{paddingHorizontal: 30}}
                     onPress={() => navigation.navigate("Main")}
                 >
-                    <Ionicons name="home" size={24} color="black" />
+                    <Ionicons name="home-outline" size={24} color="black" />
                 </TouchableOpacity>
                 
                 <View style={{paddingHorizontal: 30}}>
-                    <Ionicons onPress={() => navigation.navigate("TicketScreen")} name="card-outline" size={30} color="black" />
+                    <Ionicons onPress={() => navigation.navigate("TicketScreen")} name="card" size={30} color="black" />
                 </View>
         
                 <TouchableOpacity 
