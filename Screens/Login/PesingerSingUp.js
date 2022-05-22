@@ -1,39 +1,31 @@
-// 학번로그인 -> 회원가입 버튼 클릭하면 회원가입 페이지 화면으로 넘어간다.
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Pressable} from "react-native";
-import SelectDropdown from 'react-native-select-dropdown'; // dropdown 모듈 불러오기
+import SelectDropdown from 'react-native-select-dropdown'; 
 import { Input } from 'react-native-elements';
 import React, { useState } from 'react';
 
-// 회원정보 기본데이터 불러오기
 import { UserInfo } from '../../Database/Data/User/userInfo';
 
-// firebase cloud db 경로 불러오기
 import { db } from '../../Database/DatabaseConfig/firebase';
 
-// firebase doc 읽기, 생성, 업로드 관련 모듈 불러오기
 import { doc, setDoc, updateDoc, arrayUnion, getDoc } from 'firebase/firestore';
 import { TextInput } from "react-native";
 
 export default function SignUpScreen({navigation}) {
     
-    // 버튼에서 패신저 클릭하면 성명, 학번, 학과 입력창 나오며, 드라이버 클릭하면 학과 입력창 안나옴. 
     const [ button, setButton ] = useState('driver');
-    const [ isSelect, setSelect ] = useState([false, true]) // 0 인덱스 드라이버, 1 인덱스 패신저 
-    const [ studentNumber, SetStudentNumber ] = useState(""); // 학번
-    const [ department, SetDepartment ] = useState(""); // 학과
-    const [ nickname, SetNickname ] = useState(""); // 성명
-    //const [ keyword, setKeyword ] = useState(""); // 키워드
+    const [ isSelect, setSelect ] = useState([false, true]) 
+    const [ studentNumber, SetStudentNumber ] = useState(""); 
+    const [ department, SetDepartment ] = useState("");
+    const [ nickname, SetNickname ] = useState("");
 
-    // userInfoDoc변수에 UserInfo 기본데이터를 선언한다.
     const pesingerData = UserInfo.UserInfo[0];
 
-    let readDoc = {}; // firebase에서 읽어온 데이터를 선언 할 변수이다.
+    let readDoc = {}; 
     
     let userInfoDatas = [];
 
-    // firebase db 회원정보 불러오기, 로그인 기능 포함
     async function  Read() {
-    // 회원정보 문서 db 불러오기
+    
         const myDoc = doc(db, 'CollectionNameCarpoolTicket', 'UserInfo'); 
     
         const docSnap =  await getDoc(myDoc);
@@ -47,32 +39,24 @@ export default function SignUpScreen({navigation}) {
         
         }
     }
-    // 회원가입 버튼 클릭했을때 호출 하는 함수.
-    // Firebase UserInfo 문서에 회원정보 기본데이터를 생성할려고 한다.
-
     const PesingerInfoCreate = () => {
-        pesingerData.nickname = nickname; // 성명
-        pesingerData.student_number = studentNumber; // 학번
-        pesingerData.department = department; // 학과
-        //pesingerData.keyword = keyword;
+        pesingerData.nickname = nickname; 
+        pesingerData.student_number = studentNumber;
+        pesingerData.department = department;
 
-        // myDoc 변수는 컬랙션 아디이 경로에 문서 아이디(UserInfo)로 가르킨다.
-        // doc(firebase경로, 컬렉션 아이디, 문서 아이디)
         const myDoc = doc(db, 'CollectionNameCarpoolTicket', 'UserInfo'); 
         if (nickname != "" && studentNumber != "" && department != "") {
             
             setDoc(myDoc, {"PesingerInfo": arrayUnion(pesingerData)}, {merge: true})
             .then(() => {
-                // 회원가입 성공 할 경우 실행한다.
+
                 alert("Successed Sign Up");
 
-                // 회원 정보 입력 다했으므로 원래대로 초기화 해야한다.
-                // 학번, 비밀번호, 학년, 학과 등등 공백으로 선언
                 SetStudentNumber(""); 
                 SetDepartment("");
                 SetNickname("");
                 Read();
-                // 회원가입 성공하면 학번로그인 페이지로 넘어가주는 부분
+
                 navigation.navigate("StudendNumberLoginScreen");
             })
             .catch((error) => alert(error.messeage)); 
@@ -83,7 +67,6 @@ export default function SignUpScreen({navigation}) {
     };
 
 
-    // 드라이버 버튼 클릭 하면 패신저 버튼은 회색으로 변경 해주는 메소드.
     const DriverColorChagneBtn = () => {
         if (isSelect[0] === true) {
             return '#315EFF';
@@ -139,7 +122,7 @@ export default function SignUpScreen({navigation}) {
                     <Input
                         placeholder='성명을 입력해 주세요'
                         label="성명"
-                        leftIcon={{ type: 'material', name: 'school'}}   //name: 에 알맞는 명령어 입력시 아이콘 변경됨
+                        leftIcon={{ type: 'material', name: 'school'}}   
                         value={nickname}
                         onChangeText={Text => SetNickname(Text)}
                     />
@@ -147,7 +130,7 @@ export default function SignUpScreen({navigation}) {
                     <Input
                         placeholder='학번을 입력해 주세요'
                         label="학번"
-                        leftIcon={{ type: 'material', name: 'school'}}   //name: 에 알맞는 명령어 입력시 아이콘 변경됨
+                        leftIcon={{ type: 'material', name: 'school'}}  
                         value={studentNumber}
                         onChangeText={Text => SetStudentNumber(Text)}
                     />

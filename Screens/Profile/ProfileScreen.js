@@ -1,14 +1,11 @@
 import React, { useState, useEffect }from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, TextInput } from 'react-native';
-// 아이콘(원격주소)
 import { Fontisto } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { Octicons } from '@expo/vector-icons';
-//firebase
 import { db } from '../../Database/DatabaseConfig/firebase';
 import { doc, getDoc, updateDoc, arrayRemove } from 'firebase/firestore';
-// 회원정보 데이터
 import { UserInfo } from'../../Database/Data/User/userInfo';
 import { useIsFocused } from '@react-navigation/native';
 
@@ -26,14 +23,9 @@ export default function ProfileScreen({navigation})  {
 
     useEffect(() => {
         Read();
-        console.log(`status_message 변함 : ${UserInfo.UserInfo[0]}`);
     }, [isFocused]);
-    // firebase로 불러온 정보를 선언(가리키고자)하고자 한다.
     let readUserDoc;
-    // 사용자 티켓들 
     let userTickets;
-
-    // 데아터 문서 읽어오기
     const Read = () => {
         const myDoc = doc(db, "CollectionNameCarpoolTicket", "CarpoolTicketDocument");
         
@@ -85,11 +77,9 @@ export default function ProfileScreen({navigation})  {
         }
     }
 
-    // 상태메시지 입력창 
     const onChangeText = (value) => {
         setText(value);
     }
-    // 상태메시지 입력 버튼
     const setStatusMessageButton = () => {
         UserInfo.UserInfo[0].status_message = text;
     }
@@ -132,26 +122,24 @@ export default function ProfileScreen({navigation})  {
                         navigation.navigate("StudendNumberLoginScreen")
                         if (UserInfo.Driver[0].auth === 'driver') {
                             UserInfo.Driver[0] = {
-                                nickname: "", // 성명
-                                student_number: "", // 학번
-                                department: "", // 학과
-                                status_message: "", // 상태메세지
-                                //keyword: "", // 키워드
+                                nickname: "",
+                                student_number: "", 
+                                department: "", 
+                                status_message: "",
                                 recruitment_count: 0,
                                 auth: "",
-                                kakao_id: "" // 카카오아이디
+                                kakao_id: "" 
                                 
                             };
                         } else {
                             UserInfo.Pesinger[0] = {
-                                nickname: "", // 성명
-                                student_number: "", // 학번
-                                department: "", // 학과
-                                status_message: "", // 상태메세지
-                                //keyword: "", // 키워드
+                                nickname: "", 
+                                student_number: "", 
+                                department: "", 
+                                status_message: "", 
                                 recruitment_count: 0,
                                 auth: "",
-                                kakao_id: "" // 카카오아이디
+                                kakao_id: ""
                                 
                             };
                         }

@@ -23,13 +23,13 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 const BottomSheet = (props) => {
     const { modalVisible, setModalVisible, startInputText, endInputText, setStartInputText, setEndInputText, ticket, setTicket, Create, Read, showCarpoolTicket, showTaxiTicket, FindOverlay} = props;
-    //const [ button, setButton ] = useState(0);
+   
     
     const [ studentNumber, SetStudentNumber ] = useState("");
     const [ arrivaltime, setArrivalTime ] = useState("");
     const [ departtime, setDepartTime ] = useState("");
-    const [ startInputSelect, setStartInputSelect ] = useState([false, false, false, false]); // (인동, 옥계, 본관, 항공관)
-    const [ endInputSelect, setEndInputSelect ] = useState([false, false, false, false]); // (인동, 옥계, 본관, 항공관)
+    const [ startInputSelect, setStartInputSelect ] = useState([false, false, false, false]);
+    const [ endInputSelect, setEndInputSelect ] = useState([false, false, false, false]); 
     const [ rescruitmentButton, setRescruitmentButton ] = useState([false, false, false, false]);
     
     const screenHeight = Dimensions.get("screen").height;

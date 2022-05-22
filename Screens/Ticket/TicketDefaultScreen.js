@@ -1,14 +1,11 @@
 import React, { useState, useEffect }from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, TextInput } from 'react-native';
-// 아이콘(원격주소)
 import { Fontisto } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
-//firebase
 import { db } from '../../Database/DatabaseConfig/firebase';
 import { doc, getDoc } from 'firebase/firestore';
-// 회원정보 데이터
 import { UserInfo } from'../../Database/Data/User/userInfo';
 
 export default function TicketDefaultScreen({navigation})  {
@@ -32,11 +29,11 @@ export default function TicketDefaultScreen({navigation})  {
                     style={{paddingHorizontal: 30}}
                     onPress={() => navigation.navigate("Main")}
                 >
-                    <Ionicons name="home" size={24} color="black" />
+                    <Ionicons name="home-outline" size={24} color="black" />
                 </TouchableOpacity>
                 
                 <View style={{paddingHorizontal: 30}}>
-                    <Ionicons onPress={() => navigation.navigate("TicketScreen")} name="card-outline" size={30} color="black" />
+                    <Ionicons onPress={() => navigation.navigate("TicketScreen")} name="card" size={30} color="black" />
                 </View>
         
                 <TouchableOpacity 

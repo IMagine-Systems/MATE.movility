@@ -1,6 +1,5 @@
 import React, { useState, useEffect }from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, TextInput } from 'react-native';
-// 아이콘(원격주소)
 import { Fontisto } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
@@ -8,10 +7,8 @@ import { Octicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { CommonActions } from '@react-navigation/native';
 
-//firebase
 import { db } from '../../Database/DatabaseConfig/firebase';
 import { doc, getDoc, updateDoc, arrayRemove, arrayUnion, setDoc } from 'firebase/firestore';
-// 회원정보 데이터
 import { UserInfo } from'../../Database/Data/User/userInfo';
 import { CarpoolTicket } from '../../Database/Data/Ticket/carpoolData';
 
@@ -25,15 +22,13 @@ export default function TicketScreen({navigation})  {
     }, []);
 
     useEffect(() => {
-        console.log('재실행');
         Read();
     }, [recruitmentCancle])
 
    
-    // firebase 문서로 부터 데이터를 읽으면 userDoc state에 선언 할려고 한다.
+   
    const [ userDoc, setUserDoc ] = useState([]);
 
-   // Ticket 테이블 읽어서 저장
    let ticketInfos;
    
    const [ arrivalArea, setArrivalArea ] = useState("");
@@ -46,43 +41,36 @@ export default function TicketScreen({navigation})  {
    const [ recruitmentFourList, setRescruitmentFourList ] = useState({});
    const [ driverName, setDriverName ] = useState("");
    const [ driverDepartment, setDriverDepartment ] = useState("");
-   const [ recruitmentCancle, setRecruitmentCancle ] = useState({}); // 탑승 취소 할때 사용
+   const [ recruitmentCancle, setRecruitmentCancle ] = useState({});
 
-   // recruitmentOneList undefined일때 밑에 객체를 사용.
    const defaultRecruitmentList = {
        nickname: '',
        department: '',
    };
 
    const Read = ()  => {
-    // Reading Doc
-    // doc(firebase 경로, "컬랙션 이름", "문서 이름")
-    // myDoc 변수는 firebase CarpoolTicketDocument 문서로 가르켜 준다.
 
         const myDoc = doc(db, "CollectionNameCarpoolTicket", "TicketDocument");
 
         getDoc(myDoc)
         .then((snapshot) => {
-            // Read Success
-            // You can read what ever document by changing the collection and document path here.
-            if (snapshot.exists) { // DataSnapshop은 데이터가 포함되어있으면 true를 반환 해주며, snapshot.data()
-                //console.log(snapshot.data());
-                setUserDoc(snapshot.data()); // snapshot.data() 호출 되면 CloudDB에 있는 데이터들을 객체로 반환해준다.(console.log(snapshot.data()))
+           
+            if (snapshot.exists) {
+                setUserDoc(snapshot.data()); 
                 ticketInfos = snapshot.data();
 
                 if (ticketInfos.CarpoolTicket.length != undefined) {
                     for (let i = 0; i < ticketInfos.CarpoolTicket.length; i++) {
                         if (UserInfo.Driver[0].student_number === ticketInfos.CarpoolTicket[i].student_number && UserInfo.Driver[0].nickname === ticketInfos.CarpoolTicket[i].nickname) {
                             if (ticketInfos.CarpoolTicket[i].pesinger_info.length < 1) {
-                                //navigation.dispatch(CommonActions.goBack());
                                 navigation.navigate("TicketDefaultScreen"); 
                             } else {
-                                setArrivalArea(ticketInfos.CarpoolTicket[i].arrival_area); // 출발지
-                                setDepartArea(ticketInfos.CarpoolTicket[i].depart_area); // 도착지
-                                setOpenChatName(ticketInfos.CarpoolTicket[i].open_chat); // 오픈채팅방 이름 
-                                setOpenChatPassword(ticketInfos.CarpoolTicket[i].open_chat_password); // 오픈채팅 비밀번호
-                                setDriverName(ticketInfos.CarpoolTicket[i].nickname); // 드라이버 이름
-                                setDriverDepartment(ticketInfos.CarpoolTicket[i].department); // 드라이버 학과
+                                setArrivalArea(ticketInfos.CarpoolTicket[i].arrival_area); 
+                                setDepartArea(ticketInfos.CarpoolTicket[i].depart_area);
+                                setOpenChatName(ticketInfos.CarpoolTicket[i].open_chat);
+                                setOpenChatPassword(ticketInfos.CarpoolTicket[i].open_chat_password); 
+                                setDriverName(ticketInfos.CarpoolTicket[i].nickname); 
+                                setDriverDepartment(ticketInfos.CarpoolTicket[i].department);
                             }
                             
                         } else {
@@ -91,24 +79,24 @@ export default function TicketScreen({navigation})  {
                                 for (let j = 0; j < ticketInfos.CarpoolTicket[i].pesinger_count; j++) {
                                     if ((ticketInfos.CarpoolTicket[i].pesinger_info[j].student_number === UserInfo.Pesinger[0].student_number) 
                                         && (ticketInfos.CarpoolTicket[i].pesinger_info[j].nickname === UserInfo.Pesinger[0].nickname) ) {
-                                            setArrivalArea(ticketInfos.CarpoolTicket[i].arrival_area); // 출발지
-                                            setDepartArea(ticketInfos.CarpoolTicket[i].depart_area); // 도착지
-                                            setOpenChatName(ticketInfos.CarpoolTicket[i].open_chat); // 오픈채팅방 이름 
-                                            setOpenChatPassword(ticketInfos.CarpoolTicket[i].open_chat_password); // 오픈채팅 비밀번호
-                                            setDriverName(ticketInfos.CarpoolTicket[i].nickname); // 드라이버 이름
-                                            setDriverDepartment(ticketInfos.CarpoolTicket[i].department); // 드라이버 학과
+                                            setArrivalArea(ticketInfos.CarpoolTicket[i].arrival_area);
+                                            setDepartArea(ticketInfos.CarpoolTicket[i].depart_area);
+                                            setOpenChatName(ticketInfos.CarpoolTicket[i].open_chat);
+                                            setOpenChatPassword(ticketInfos.CarpoolTicket[i].open_chat_password);
+                                            setDriverName(ticketInfos.CarpoolTicket[i].nickname); 
+                                            setDriverDepartment(ticketInfos.CarpoolTicket[i].department); 
                                     }
                                 }
                             } else {
                                 for (let j = 0; j < ticketInfos.CarpoolTicket[i].pesinger_count; j++) {
                                     if ((ticketInfos.CarpoolTicket[i].pesinger_info[j].student_number === UserInfo.Driver[0].student_number) 
                                         && (ticketInfos.CarpoolTicket[i].pesinger_info[j].nickname === UserInfo.Driver[0].nickname) ) {
-                                            setArrivalArea(ticketInfos.CarpoolTicket[i].arrival_area); // 출발지
-                                            setDepartArea(ticketInfos.CarpoolTicket[i].depart_area); // 도착지
-                                            setOpenChatName(ticketInfos.CarpoolTicket[i].open_chat); // 오픈채팅방 이름 
-                                            setOpenChatPassword(ticketInfos.CarpoolTicket[i].open_chat_password); // 오픈채팅 비밀번호
-                                            setDriverName(ticketInfos.CarpoolTicket[i].nickname); // 드라이버 이름
-                                            setDriverDepartment(ticketInfos.CarpoolTicket[i].department); // 드라이버 학과
+                                            setArrivalArea(ticketInfos.CarpoolTicket[i].arrival_area);
+                                            setDepartArea(ticketInfos.CarpoolTicket[i].depart_area); 
+                                            setOpenChatName(ticketInfos.CarpoolTicket[i].open_chat); 
+                                            setOpenChatPassword(ticketInfos.CarpoolTicket[i].open_chat_password); 
+                                            setDriverName(ticketInfos.CarpoolTicket[i].nickname); 
+                                            setDriverDepartment(ticketInfos.CarpoolTicket[i].department); 
                                     }
                                 }
                             }
@@ -131,15 +119,13 @@ export default function TicketScreen({navigation})  {
 
         getDoc(myDoc)
         .then((snapshot) => {
-            // Read Success
-            // You can read what ever document by changing the collection and document path here.
+          
             
-            //console.log(snapshot.data());
             ticketInfos = snapshot.data();
             if (ticketInfos.CarpoolTicket.length != undefined) {
                 for (let i = 0; i < ticketInfos.CarpoolTicket.length; i++) {
                     if (UserInfo.Driver[0].student_number === ticketInfos.CarpoolTicket[i].student_number && UserInfo.Driver[0].nickname === ticketInfos.CarpoolTicket[i].nickname) {
-                        //setNickname(ticketInfos.CarpoolTicket[i].pesinger_info[0].nickname);
+                       
                         setRescruitmentOneList(ticketInfos.CarpoolTicket[i].pesinger_info[0]);
                         if (ticketInfos.CarpoolTicket[i].pesinger_count === 1) {
                             setRescruitmentTwoList(ticketInfos.CarpoolTicket[i].pesinger_info[1]);
@@ -209,7 +195,6 @@ export default function TicketScreen({navigation})  {
         .catch((error) => alert(error.message))
     }
 
-    // 탑승 취소 기능
     const RecruitmentCancel = () => {
         const myDoc = doc(db, "CollectionNameCarpoolTicket", "TicketDocument");
 
@@ -247,7 +232,7 @@ export default function TicketScreen({navigation})  {
                                         updateDoc(myDoc, {CarpoolTicket: arrayUnion(ticketInfos.CarpoolTicket[i]) });
                                         alert('탐승 취소 하였습니다.');
                                         navigation.navigate("TicketDefaultScreen");
-                                        //navigation.dispatch( CommonActions.goBack()); 
+                                        
                                 }
                             }
                         }
@@ -263,7 +248,7 @@ export default function TicketScreen({navigation})  {
                                     updateDoc(myDoc, {CarpoolTicket: arrayUnion(ticketInfos.CarpoolTicket[i]) });
                                     alert('탐승 취소 하였습니다.');
                                     navigation.navigate("TicketDefaultScreen");
-                                    //navigation.dispatch( CommonActions.goBack()); 
+                                    
                             }
                         }                                 
                     }
@@ -308,7 +293,7 @@ export default function TicketScreen({navigation})  {
                 if (ticketInfos.CarpoolTicket.length != undefined) {
                     for (let i = 0; i < ticketInfos.CarpoolTicket.length; i++) {
                         if (UserInfo.Driver[0].student_number === ticketInfos.CarpoolTicket[i].student_number && UserInfo.Driver[0].nickname === ticketInfos.CarpoolTicket[i].nickname) {
-                            //setNickname(ticketInfos.CarpoolTicket[i].pesinger_info[0].nickname);
+                
                             setDoc(myDoc2, {CarpoolTicket: arrayUnion(ticketInfos.CarpoolTicket[i])});
                             updateDoc(myDoc, { CarpoolCount: ticketInfos.CarpoolCount-1, CarpoolTicket: arrayRemove(ticketInfos.CarpoolTicket[i]) })
                             alert("탑승 완료 했습니다.");

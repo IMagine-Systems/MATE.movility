@@ -24,36 +24,36 @@ const TicketBottomSheet = (props) => {
 
 
     const { ticketModalVisible, setTicketModalVisible, userDoc, data, setData,showCarpoolTicket, showTaxiTicket, Read, carpoolCount, UserInfo, navigation, FindOverlay  } = props;
-    // 자기가 만든 티켓을 삭제할때 사용할 state이다.
+   
 
     let default_data = {
-        "arrival_area": "", // 출발지
-        "carpool_id": 1000, // 카풀아이디
-        "day": "2022/05/03", // 일자
-        "depart_area": "", // 출발지
-        "department": "", // 학과,
+        "arrival_area": "", 
+        "carpool_id": 1000, 
+        "day": "2022/05/03", 
+        "depart_area": "", 
+        "department": "",
         "arrival_time": "",
-        "departure_time": "30분", // 도착시간
-        "nickname": "", // 성명
-        "recruitment_count": 0, // 모집인원 0~4명
+        "departure_time": "30분",
+        "nickname": "",
+        "recruitment_count": 0, 
         "pesinger_count": 0,
-        "ticket_name": "카풀", // 티켓 카풀
+        "ticket_name": "카풀", 
         "open_chat": "",
         "open_chat_password": "",
         "pesinger_info": [],
     };
 
     const [ deleted, setDeleted ] = useState(false);
-    // 오픈채팅 보여줄지
+   
     const [ openChat, setOpenChat ] = useState(false);
 
-    // 수정 할때 사용할 state 출발지, 도착지
+    
     const [ arrivalText, setArrivalText ] = useState('');
     const [ departText, setDepartText ] = useState('');
 
-    // 탑승했으면 다른 티켓에 드라이버, 패신저 탑승 못하도록 state로 사용 할 예정. 중복 -> overlap
+    
     const [ recruitmentOverlap, setRecruitmentOverlap ] = useState(false);
-    //let driverTicketOverlap = false;
+    
     const [ driverTicketOverlap, setDriverTicketOverlap ] = useState(false);
 
     const screenHeight = Dimensions.get("screen").height;
@@ -135,8 +135,7 @@ const TicketBottomSheet = (props) => {
         ReadData();
     }, []);
 
-    // findDelete 함수는 자기 티켓만 삭제 할수있도록 setDeleted state true,false로 권한을 준다.
-    // nickname으로 비교하지만 추후에 학번으로 바꾸고자 한다. 
+   
     const findDelete = () => {
         if (data.nickname === UserInfo.UserInfo[0].nickname) {
             setDeleted(true);
@@ -145,8 +144,6 @@ const TicketBottomSheet = (props) => {
             setDeleted(false);
         }
     }
-    //console.log('현재 탑승인원 : ', data.recruitment_count);
-    
 
     const ReadData = () => {
         const myDoc = doc(db, "CollectionNameCarpoolTicket", "TicketDocument");
@@ -160,10 +157,10 @@ const TicketBottomSheet = (props) => {
                         for (let j = 0; j < ticket_info.CarpoolTicket[i].pesinger_info.length; j++) {
                             if (ticket_info.CarpoolTicket[i].pesinger_info[j].student_number === UserInfo.Driver[0].student_number 
                                 && ticket_info.CarpoolTicket[i].pesinger_info[j].nickname === UserInfo.Driver[0].nickname) {
-                                    setRecruitmentOverlap(true); // 드라이버 유저가 패신저로 탑승 할때 다른 티켓에서 탑승 하였다. 중복
+                                    setRecruitmentOverlap(true);
                             } else if (ticket_info.CarpoolTicket[i].pesinger_info[j].student_number === UserInfo.Pesinger[0].student_number
                                 && ticket_info.CarpoolTicket[i].pesinger_info[j].nickname === UserInfo.Pesinger[0].nickname) {
-                                    setRecruitmentOverlap(true); // 패신저 유저가 다른 티켓에서 탑승 하였다. 중복
+                                    setRecruitmentOverlap(true); 
                             }
                         }
                     }
@@ -199,7 +196,6 @@ const TicketBottomSheet = (props) => {
         }
     }
 
-    // 탑승하기 버튼 클릭하면 탑승자 추가 된다.
     const addRecruitment = () => {
 
         const myDoc = doc(db, "CollectionNameCarpoolTicket", "TicketDocument");
@@ -213,10 +209,10 @@ const TicketBottomSheet = (props) => {
                         for (let j = 0; j < ticket_info.CarpoolTicket[i].pesinger_info.length; j++) {
                             if (ticket_info.CarpoolTicket[i].pesinger_info[j].student_number === UserInfo.Driver[0].student_number 
                                 && ticket_info.CarpoolTicket[i].pesinger_info[j].nickname === UserInfo.Driver[0].nickname) {
-                                    setRecruitmentOverlap(true); // 드라이버 유저가 패신저로 탑승 할때 다른 티켓에서 탑승 하였다. 중복
+                                    setRecruitmentOverlap(true);
                             } else if (ticket_info.CarpoolTicket[i].pesinger_info[j].student_number === UserInfo.Pesinger[0].student_number
                                 && ticket_info.CarpoolTicket[i].pesinger_info[j].nickname === UserInfo.Pesinger[0].nickname) {
-                                    setRecruitmentOverlap(true); // 패신저 유저가 다른 티켓에서 탑승 하였다. 중복
+                                    setRecruitmentOverlap(true); 
                             }
                         }
                     }
@@ -451,9 +447,7 @@ const TicketBottomSheet = (props) => {
         }
     }
 
-    // 출발지, 도착지수정 실행 하는 함수
     const setArrivalUpdate = (btn_id) => {
-        // btn_id : 1 경운대학교, btn_id : 2 인동, btn_id : 3 옥계
         if (btn_id === 1) {
             setArrivalText('경운대학교');
         } else if (btn_id === 2) {
@@ -464,7 +458,6 @@ const TicketBottomSheet = (props) => {
     }
 
     const setDepartUpdate = (btn_id) => {
-        // btn_id : 1 경운대학교, btn_id : 2 인동, btn_id : 3 옥계
         if (btn_id === 1) {
             setDepartText('경운대학교');
         } else if (btn_id === 2) {
@@ -918,8 +911,6 @@ const styles = StyleSheet.create({
 
     bottomSheetContainer: {
         flex: 2,
-        // justifyContent: "center",
-        // alignItems: "center",
         
     },
     header: {

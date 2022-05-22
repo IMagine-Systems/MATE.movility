@@ -1,4 +1,3 @@
-// 학번로그인 -> 회원가입 버튼 클릭하면 회원가입 페이지 화면으로 넘어간다.
 import React, { useEffect, useRef, useState } from 'react';
 import {
     View,
@@ -20,10 +19,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { Input } from 'react-native-elements';
 import { db } from '../../Database/DatabaseConfig/firebase';
 import { doc, getDoc, setDoc, upDateDoc, arrayUnion, updateDoc, arrayRemove } from 'firebase/firestore';
-// 기본 데이터 불러오기 (CarpoolTicket, TexiTicket)
 import { CarpoolTicket } from'../../Database/Data/Ticket/carpoolData';
 import { TaxiTicket } from '../../Database/Data/Ticket/taxiData';
-// 회원정보 데이터
 import { UserInfo } from'../../Database/Data/User/userInfo';
 
 export default function TicketUpdateScreen({navigation}) {
@@ -31,13 +28,13 @@ export default function TicketUpdateScreen({navigation}) {
     const [ studentNumber, SetStudentNumber ] = useState("");
     const [ arrivaltime, setArrivalTime ] = useState("");
     const [ departtime, setDepartTime ] = useState("");
-    const [ startInputSelect, setStartInputSelect ] = useState([false, false, false, false]); // (인동, 옥계, 본관, 항공관)
-    const [ endInputSelect, setEndInputSelect ] = useState([false, false, false, false]); // (인동, 옥계, 본관, 항공관)
+    const [ startInputSelect, setStartInputSelect ] = useState([false, false, false, false]); 
+    const [ endInputSelect, setEndInputSelect ] = useState([false, false, false, false]); 
     const [ rescruitmentButton, setRescruitmentButton ] = useState([false, false, false, false]);
     const [ openChatName, setOpenChatName ] = useState("");
     const [ openChatPassword, setOpenChatPassword ] = useState("");
-    const [ startInputText, setStartInputText ] = useState(''); // 출발지점 입력부분 state 값
-    const [ endInputText, setEndInputText ] = useState(''); // 출발지점 입력부분 state 값
+    const [ startInputText, setStartInputText ] = useState(''); 값
+    const [ endInputText, setEndInputText ] = useState(''); 
     
     let ticket_infos;
     let button = 0;
@@ -62,26 +59,18 @@ export default function TicketUpdateScreen({navigation}) {
         if (button === 1) {
             setStartInputText('인동');
             setStartInputSelect([true, false, false, false]);
-            console.log('modal console 출발지: ', startInputText);
-            console.log(button);
         }
         else if (button === 2) {
             setStartInputText('옥계');
             setStartInputSelect([false, true, false, false]);
-            console.log('modal console 출발지: ', startInputText);
-            console.log(button);
         }
         else if (button === 3) {
             setStartInputText('본관');
             setStartInputSelect([false, false, true, false]);
-            console.log('modal console 출발지: ', startInputText);
-            console.log(button);
         }
         else if (button === 4) {
             setStartInputText('항공관');
             setStartInputSelect([false, false, false, true]);
-            console.log('modal console 출발지: ', startInputText);
-            console.log(button);
         }
     }
 
@@ -182,26 +171,18 @@ export default function TicketUpdateScreen({navigation}) {
         if (button === 1) {
             setEndInputText('인동');
             setEndInputSelect([true, false, false, false]);
-            console.log('modal console 도착지: ', endInputText);
-            console.log(button);
         }
         else if (button === 2) {
             setEndInputText('옥계');
             setEndInputSelect([false, true, false, false]);
-            console.log('modal console 도착지: ', endInputText);
-            console.log(button);
         }
         else if (button === 3) {
             setEndInputText('본관');
             setEndInputSelect([false, false, true, false]);
-            console.log('modal console 도착지: ', endInputText);
-            console.log(button);
         }
         else if (button === 4) {
             setEndInputText('항공관');
             setEndInputSelect([false, false, false, true]);
-            console.log('modal console 도착지: ', endInputText);
-            console.log(button);
         }
     }
     
@@ -525,7 +506,6 @@ export default function TicketUpdateScreen({navigation}) {
         getDoc(myDoc)
         .then((snapshot) => {
             ticket_infos = snapshot.data();
-            console.log('티켓 수정 버튼 클릭 : ', ticket_infos)
             for (let i = 0; i < ticket_infos.CarpoolTicket.length; i++) {
                 if (ticket_infos.CarpoolTicket[i].student_number === UserInfo.Driver[0].student_number && ticket_infos.CarpoolTicket[i].nickname === UserInfo.Driver[0].nickname) {
                     updateDoc(myDoc, { CarpoolTicket : arrayRemove(ticket_infos.CarpoolTicket[i])});
