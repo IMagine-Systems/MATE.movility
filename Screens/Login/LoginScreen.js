@@ -66,6 +66,7 @@ const LoginScreen = ({navigation}) => {
           DriverProfile.department = UserInfo.Driver_login[i].department;
           DriverProfile.auth = UserInfo.Driver_login[i].auth;
           DriverProfile.kakao_id = UserInfo.Driver_login[i].kakao_id;
+          DriverProfile.status_message = UserInfo.Driver_login[i].status_message;
 
           signIn = true;
 
@@ -84,6 +85,7 @@ const LoginScreen = ({navigation}) => {
           PesingerProfile.department = UserInfo.Pesinger_login[i].department;
           PesingerProfile.auth = UserInfo.Pesinger_login[i].auth;
           PesingerProfile.kakao_id = UserInfo.Pesinger_login[i].kakao_id;
+          PesingerProfile.status_message = UserInfo.Pesinger_login[i].status_message;
 
           signIn = true;
 
