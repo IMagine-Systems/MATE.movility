@@ -563,7 +563,7 @@ const BottomSheet = (props) => {
 
                         <View style={{flex: 0.3, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
                             <View style = {{borderRadius: 10, width: 55, height : 30, backgroundColor :"rgba(196, 196, 196, 0.31)", justifyContent: 'center', alignItems: 'center'}}>
-                                <Text>출발시간</Text>
+                                <Text>시간|장소</Text>
                             </View> 
                             <Input 
                                 containerStyle={{width: '65%', }} 
@@ -573,8 +573,8 @@ const BottomSheet = (props) => {
                         </View>
 
                         <View style={{flex: 0.3, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
-                            <View style = {{borderRadius: 10, width: 55, height : 30, backgroundColor : "rgba(196, 196, 196, 0.31)", justifyContent: 'center', alignItems: 'center'}}>
-                                <Text>오픈채팅</Text>
+                            <View style = {{borderRadius: 10, width: 75, height : 30, backgroundColor : "rgba(196, 196, 196, 0.31)", justifyContent: 'center', alignItems: 'center'}}>
+                                <Text>오픈채팅이름</Text>
                             </View> 
                             <Input 
                                 containerStyle={{width: '65%', }}

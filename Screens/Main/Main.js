@@ -72,15 +72,8 @@ export default function Main({ navigation }) {
         FindOverlay();
     }, [isFocused])
 
-  
-
-
-    const sheetRef = React.useRef(null);
-
     let carpoolCount = 0;
     let ticketInfos;
-
-    const index = 0;
     
     const Read = ()  => {
       
@@ -315,8 +308,8 @@ export default function Main({ navigation }) {
         {/*Title 부분 */}
         <ImageBackground style={{}} source={require('../../assets/mate_main.jpeg')} imageStyle={{borderBottomLeftRadius: 40}}>
             <View style={{height: 200, width: 190,justifyContent: 'flex-end', marginLeft: 10, paddingBottom: 20}}>
-                <Text style={{fontSize: 32, color: 'white', fontWeight: 'bold'}}>MATE</Text>
-                <Text style={{fontSize: 13, color: 'white', fontWeight: 'bold'}}>오늘은 어떤 만남을 하시겠어요?</Text>
+                <Text style={{fontSize: 36, color: 'white', fontWeight: 'bold'}}>MATE</Text>
+                <Text style={{fontSize: 14, color: 'white', fontWeight: 'bold'}}>오늘은 어떤 만남을 하시겠어요?</Text>
             </View>
         </ImageBackground>
         
@@ -441,8 +434,8 @@ const styles = StyleSheet.create({
     
     },
     ticket_button: {
-        flex: 0.8,
-        width : '80%',
+        flex: 0.9,
+        width : '90%',
         backgroundColor: 'white',
 
         borderRadius: 15,

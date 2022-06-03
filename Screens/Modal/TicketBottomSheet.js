@@ -24,16 +24,15 @@ const TicketBottomSheet = (props) => {
 
 
     const { ticketModalVisible, setTicketModalVisible, userDoc, data, setData,showCarpoolTicket, showTaxiTicket, Read, carpoolCount, UserInfo, navigation, FindOverlay  } = props;
-   
 
     let default_data = {
         "arrival_area": "", 
         "carpool_id": 1000, 
-        "day": "2022/05/03", 
-        "depart_area": "", 
-        "department": "",
+        "day": "2022/05/03",
+        "depart_area": "",
+        "department": "", 
         "arrival_time": "",
-        "departure_time": "30분",
+        "departure_time": "30분", 
         "nickname": "",
         "recruitment_count": 0, 
         "pesinger_count": 0,
@@ -44,16 +43,12 @@ const TicketBottomSheet = (props) => {
     };
 
     const [ deleted, setDeleted ] = useState(false);
-   
     const [ openChat, setOpenChat ] = useState(false);
 
-    
     const [ arrivalText, setArrivalText ] = useState('');
     const [ departText, setDepartText ] = useState('');
 
-    
     const [ recruitmentOverlap, setRecruitmentOverlap ] = useState(false);
-    
     const [ driverTicketOverlap, setDriverTicketOverlap ] = useState(false);
 
     const screenHeight = Dimensions.get("screen").height;
@@ -77,30 +72,6 @@ const TicketBottomSheet = (props) => {
 
     let ticket_info;
 
-    const ShowOpenChat = () => {
-       
-        if (data.ticket_name === '카풀' && UserInfo.Driver[0].nickname === data.nickname) {
-            setOpenChat(true);
-            return (
-                <View>
-                    <Text style={{fontSize: 15, marginRight: 10}}>오픈채팅방 : {data.open_chat}</Text>
-                    <Text style={{fontSize: 15, marginRight: 10}}>비밀번호 : {data.open_chat_password}</Text>
-                </View>
-            );
-        } else {
-            for (let i = 0; i < data.pesinger_info.length; i++) {
-                if (data.pesinger_info[i] === UserInfo.Pesinger[0].student_number) {
-                    setOpenChat(true);
-                    return (
-                        <View>
-                            <Text style={{fontSize: 15, marginRight: 10}}>오픈채팅방 : {data.open_chat}</Text>
-                            <Text style={{fontSize: 15, marginRight: 10}}>비밀번호 : {data.open_chat_password}</Text>
-                        </View>
-                    );
-                }
-            }
-        }
-    }
 
     const panResponders = useRef(PanResponder.create({
         onStartShouldSetPanResponder: () => true,
@@ -135,7 +106,6 @@ const TicketBottomSheet = (props) => {
         ReadData();
     }, []);
 
-   
     const findDelete = () => {
         if (data.nickname === UserInfo.UserInfo[0].nickname) {
             setDeleted(true);
@@ -144,6 +114,7 @@ const TicketBottomSheet = (props) => {
             setDeleted(false);
         }
     }
+    
 
     const ReadData = () => {
         const myDoc = doc(db, "CollectionNameCarpoolTicket", "TicketDocument");
@@ -157,10 +128,10 @@ const TicketBottomSheet = (props) => {
                         for (let j = 0; j < ticket_info.CarpoolTicket[i].pesinger_info.length; j++) {
                             if (ticket_info.CarpoolTicket[i].pesinger_info[j].student_number === UserInfo.Driver[0].student_number 
                                 && ticket_info.CarpoolTicket[i].pesinger_info[j].nickname === UserInfo.Driver[0].nickname) {
-                                    setRecruitmentOverlap(true);
+                                    setRecruitmentOverlap(true); 
                             } else if (ticket_info.CarpoolTicket[i].pesinger_info[j].student_number === UserInfo.Pesinger[0].student_number
                                 && ticket_info.CarpoolTicket[i].pesinger_info[j].nickname === UserInfo.Pesinger[0].nickname) {
-                                    setRecruitmentOverlap(true); 
+                                    setRecruitmentOverlap(true);
                             }
                         }
                     }
@@ -209,7 +180,7 @@ const TicketBottomSheet = (props) => {
                         for (let j = 0; j < ticket_info.CarpoolTicket[i].pesinger_info.length; j++) {
                             if (ticket_info.CarpoolTicket[i].pesinger_info[j].student_number === UserInfo.Driver[0].student_number 
                                 && ticket_info.CarpoolTicket[i].pesinger_info[j].nickname === UserInfo.Driver[0].nickname) {
-                                    setRecruitmentOverlap(true);
+                                    setRecruitmentOverlap(true); 
                             } else if (ticket_info.CarpoolTicket[i].pesinger_info[j].student_number === UserInfo.Pesinger[0].student_number
                                 && ticket_info.CarpoolTicket[i].pesinger_info[j].nickname === UserInfo.Pesinger[0].nickname) {
                                     setRecruitmentOverlap(true); 
@@ -368,102 +339,6 @@ const TicketBottomSheet = (props) => {
                     </View> 
                 );
             }
-        }
-    }
-    // 드라이버만 티켓 삭제 하기 구현
-    const ShowDeletTicketButton = () => {
-      
-        if (data === undefined) {
-            if (default_data.student_number === UserInfo.Driver[0].student_number && default_data.nickname === UserInfo.Driver[0].nickname) {
-                return (
-                    <View style={styles.button_container}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                closeModal();
-                                TicketDelete();
-                            }
-                        }
-                            style={{width: '100%', alignItems: 'center'}}
-                        >
-                            <Text style={{fontWeight: 'bold'}}>삭제하기</Text>
-                        </TouchableOpacity>
-                    </View> 
-                );
-            }
-        } else {
-            if (data.student_number === UserInfo.Driver[0].student_number && data.nickname === UserInfo.Driver[0].nickname) {
-                return (
-                    <View style={styles.button_container}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                closeModal();
-                                TicketDelete();
-                            }
-                        }
-                            style={{width: '100%', alignItems: 'center'}}
-                        >
-                            <Text style={{fontWeight: 'bold'}}>삭제하기</Text>
-                        </TouchableOpacity>
-                    </View> 
-                );
-            }
-        }
-    }
-
-    const ShowUpdateTicketButton = () => {
-        if (data === undefined) {
-            if (default_data.student_number === UserInfo.Driver[0].student_number && default_data.nickname === UserInfo.Driver[0].nickname) {
-                return (
-                    <View style={styles.button_container}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                closeModal();
-                                navigation.navigate("TicketUpdateScreen");
-                        }}
-                            style={{width: '100%', alignItems: 'center'}}
-                        >
-                            <Text style={{fontWeight: 'bold'}}>수정하기</Text>
-                        </TouchableOpacity>
-                    </View> 
-                );
-            }
-        } else {
-            if (data.student_number === UserInfo.Driver[0].student_number && data.nickname === UserInfo.Driver[0].nickname) {
-                return (
-                    <View style={styles.button_container}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                closeModal();
-                                navigation.navigate("TicketUpdateScreen");
-                            }
-                        }
-                            style={{width: '100%', alignItems: 'center'}}
-                        >
-                            <Text style={{fontWeight: 'bold'}}>수정하기</Text>
-                        </TouchableOpacity>
-                    </View> 
-                );
-            }
-        }
-    }
-
-    const setArrivalUpdate = (btn_id) => {
-        if (btn_id === 1) {
-            setArrivalText('경운대학교');
-        } else if (btn_id === 2) {
-            setArrivalText('인동');
-        } else if (btn_id === 3) {
-            setArrivalText('옥계');
-        }
-    }
-
-    const setDepartUpdate = (btn_id) => {
-        if (btn_id === 1) {
-            setDepartText('경운대학교');
-        } else if (btn_id === 2) {
-            setDepartText('인동');
-        } else if (btn_id === 3) {
-            setDepartText('옥계');
         }
     }
 
@@ -860,7 +735,7 @@ const TicketBottomSheet = (props) => {
 
                             <View style={{flexDirection: 'row', flex: 1,}}>
                                 <View style={styles.arrival_time_text}>
-                                    <Text style={{fontWeight: 'bold'}}>출발 시간</Text>
+                                    <Text style={{fontWeight: 'bold'}}>시간|장소</Text>
                                 </View>
                                 <View style={styles.arrival_time_container}>
                                     <Text>{data === undefined ? default_data.arrival_time : data.arrival_time}</Text>
@@ -888,7 +763,6 @@ const TicketBottomSheet = (props) => {
                         </View>
                         <View style={styles.recruitment_button_container}>
                             {ShowTicketRecruitmentButton()}
-                            {ShowUpdateTicketButton()}
                         </View>   
                     </View>
                 </Animated.View>
@@ -911,6 +785,8 @@ const styles = StyleSheet.create({
 
     bottomSheetContainer: {
         flex: 2,
+        // justifyContent: "center",
+        // alignItems: "center",
         
     },
     header: {

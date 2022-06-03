@@ -9,6 +9,7 @@ import ProfileScreen from "./Screens/Profile/ProfileScreen";
 import TicketScreen from "./Screens/Ticket/TicketScreen";
 import TicketUpdateScreen from "./Screens/TicketScreen/TicketUpdateScreen";
 import TicketDefaultScreen from "./Screens/Ticket/TicketDefaultScreen";
+
 const Stack = createStackNavigator();
 
 export default class App extends React.Component {

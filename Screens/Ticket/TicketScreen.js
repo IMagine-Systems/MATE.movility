@@ -216,7 +216,7 @@ export default function TicketScreen({navigation})  {
                                         ticketInfos.CarpoolTicket[i].pesinger_info = ticketInfos.CarpoolTicket[i].pesinger_info.filter(element => element.student_number != UserInfo.Pesinger[0].student_number);              
                                         ticketInfos.CarpoolTicket[i].pesinger_count -= 1                                                      
                                         updateDoc(myDoc, {CarpoolTicket: arrayUnion(ticketInfos.CarpoolTicket[i]) });
-                                        alert('탐승 취소 하였습니다.');
+                                        alert('탑승 취소 하였습니다.');
                                         navigation.navigate("TicketDefaultScreen");
                                 }
                             }
@@ -230,7 +230,7 @@ export default function TicketScreen({navigation})  {
                                         ticketInfos.CarpoolTicket[i].pesinger_info = ticketInfos.CarpoolTicket[i].pesinger_info.filter(element => element.student_number != UserInfo.Driver[0].student_number);              
                                         ticketInfos.CarpoolTicket[i].pesinger_count -= 1                                                      
                                         updateDoc(myDoc, {CarpoolTicket: arrayUnion(ticketInfos.CarpoolTicket[i]) });
-                                        alert('탐승 취소 하였습니다.');
+                                        alert('탑승 취소 하였습니다.');
                                         navigation.navigate("TicketDefaultScreen");
                                         
                                 }
@@ -246,7 +246,7 @@ export default function TicketScreen({navigation})  {
                                     ticketInfos.CarpoolTicket[i].pesinger_info = ticketInfos.CarpoolTicket[i].pesinger_info.filter(element => element.student_number != UserInfo.Pesinger[0].student_number);              
                                     ticketInfos.CarpoolTicket[i].pesinger_count -= 1                                                      
                                     updateDoc(myDoc, {CarpoolTicket: arrayUnion(ticketInfos.CarpoolTicket[i]) });
-                                    alert('탐승 취소 하였습니다.');
+                                    alert('탑승 취소 하였습니다.');
                                     navigation.navigate("TicketDefaultScreen");
                                     
                             }
@@ -294,9 +294,9 @@ export default function TicketScreen({navigation})  {
                     for (let i = 0; i < ticketInfos.CarpoolTicket.length; i++) {
                         if (UserInfo.Driver[0].student_number === ticketInfos.CarpoolTicket[i].student_number && UserInfo.Driver[0].nickname === ticketInfos.CarpoolTicket[i].nickname) {
                 
-                            setDoc(myDoc2, {CarpoolTicket: arrayUnion(ticketInfos.CarpoolTicket[i])});
+                            updateDoc(myDoc2, {CarpoolTicket: arrayUnion(ticketInfos.CarpoolTicket[i])});
                             updateDoc(myDoc, { CarpoolCount: ticketInfos.CarpoolCount-1, CarpoolTicket: arrayRemove(ticketInfos.CarpoolTicket[i]) })
-                            alert("탑승 완료 했습니다.");
+                            alert("운행 종료 했습니다.");
                             navigation.navigate("Main");
                         }
                     } 
@@ -312,7 +312,7 @@ export default function TicketScreen({navigation})  {
                     onPress={RecruitmentComplete}
                 >
                     <View style={[styles.button]}>
-                        <Text style={styles.button_font}>도착 완료</Text>
+                        <Text style={styles.button_font}>운행 종료</Text>
                     </View>
                 </TouchableOpacity>
             );

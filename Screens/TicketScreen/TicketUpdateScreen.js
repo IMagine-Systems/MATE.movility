@@ -72,6 +72,10 @@ export default function TicketUpdateScreen({navigation}) {
             setStartInputText('항공관');
             setStartInputSelect([false, false, false, true]);
         }
+        else if (button === 5) {
+            setStartInputText('그 외');
+            setStartInputSelect([false, false, false, true]);
+        }
     }
 
     const StartLocalSelectButtonColor = () => {
@@ -622,7 +626,7 @@ export default function TicketUpdateScreen({navigation}) {
                         
                         <View style={{flex: 0.1, backgroundColor: 'white', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
                             <View style = {{borderRadius: 10, width: 55, height : 30, backgroundColor :"rgba(196, 196, 196, 0.31)", justifyContent: 'center', alignItems: 'center'}}>
-                                <Text>출발시간</Text>
+                                <Text>시간|장소</Text>
                             </View> 
     
                                 
@@ -635,7 +639,7 @@ export default function TicketUpdateScreen({navigation}) {
 
                         <View style={{flex: 0.1, backgroundColor: 'white', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
                             <View style = {{borderRadius: 10, width: 55, height : 30, backgroundColor : "rgba(196, 196, 196, 0.31)", justifyContent: 'center', alignItems: 'center'}}>
-                                <Text>오픈채팅</Text>
+                                <Text>오픈채팅이름</Text>
                             </View> 
                             <Input 
                                     containerStyle={{width: '65%', }}
